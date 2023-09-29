@@ -42,3 +42,26 @@ plt.ylabel("% explanations with race as first feature")
 
 sns.scatterplot(f1s, fsts, ax=ax)
 plt.savefig("0A_ROBUSTNESS_shap_f1_first.png")
+
+
+# Define the number of bins and the range of F1 scores
+num_bins = 10  # Adjust as needed
+f1_min, f1_max = min(f1s), max(f1s)
+bin_width = (f1_max - f1_min) / num_bins
+
+
+# Create bins and calculate the mean for each bin
+bin_means = []
+for i in range(num_bins):
+    bin_start = f1_min + i * bin_width
+    bin_end = bin_start + bin_width
+    mask = (f1s >= bin_start) & (f1s < bin_end)
+    bin_mean = np.mean(np.array(fsts)[mask])
+    bin_means.append(bin_mean)
+
+# Plot the trend line as the mean of binned points
+bin_centers = [f1_min + i * bin_width + bin_width / 2 for i in range(num_bins)]
+plt.plot(bin_centers, bin_means, "r--")
+
+# Save the plot
+plt.savefig("0A_ROBUSTNESS_SHAP_f1_first_with_binned_trend.png")
