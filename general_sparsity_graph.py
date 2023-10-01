@@ -182,7 +182,7 @@ plt.ylabel('Sparsity score')
 plt.legend()
 
 # Set the title of the plot
-plt.title('Sparsity SHAP CIC')
+# plt.title('Sparsity SHAP CIC')
 
 # Show the plot
 plt.show()
@@ -234,7 +234,8 @@ y_axis_SVM =  [0.15384615384615385, 0.5769230769230769, 0.6923076923076923, 0.84
     #ADA
 y_axis_ADA =  [0.15384615384615385, 0.5384615384615384, 0.6538461538461539, 0.8461538461538461, 0.8461538461538461, 0.8846153846153846, 0.8846153846153846, 0.9230769230769231, 0.9615384615384616, 0.9615384615384616, 0.9615384615384616] 
     #KNN
-y_axis_KNN = []
+y_axis_KNN =  [0.2222222222222222, 0.6666666666666666, 0.8148148148148148, 0.8148148148148148, 0.8518518518518519, 0.8518518518518519, 0.8518518518518519, 0.8518518518518519, 0.8518518518518519, 0.8888888888888888, 0.9629629629629629] 
+
     #MLP
 y_axis_MLP =  [0.5, 0.8461538461538461, 0.8846153846153846, 0.9230769230769231, 0.9230769230769231, 0.9615384615384616, 0.9615384615384616, 0.9615384615384616, 0.9615384615384616, 0.9615384615384616, 0.9615384615384616] 
 
@@ -258,7 +259,7 @@ plt.plot(x_axis, y_axis_SVM, label='SVM', color='purple', linestyle='--', marker
 plt.plot(x_axis, y_axis_MLP, label='MLP', color='orange', linestyle='--', marker='h')
 
 # Plot the sixth line
-# plt.plot(x_axis, y_axis_KNN, label='KNN', color='magenta', linestyle='--', marker='+')
+plt.plot(x_axis, y_axis_KNN, label='KNN', color='magenta', linestyle='--', marker='+')
 
 # Plot the seventh line
 plt.plot(x_axis, y_axis_ADA, label='ADA', color='cyan', linestyle='--', marker='_')
@@ -275,7 +276,7 @@ plt.ylabel('Sparsity score')
 plt.legend()
 
 # Set the title of the plot
-plt.title('Sparsity SHAP SML')
+# plt.title('Sparsity SHAP SML')
 
 # Show the plot
 plt.show()
@@ -300,9 +301,9 @@ auc = np.trapz(y_axis_SVM, x_axis)
 print('SVM')
 print(f"AUC: {auc}")
 
-# auc = np.trapz(y_axis_KNN, x_axis)
-# print('KNN')
-# print(f"AUC: {auc}")
+auc = np.trapz(y_axis_KNN, x_axis)
+print('KNN')
+print(f"AUC: {auc}")
 
 auc = np.trapz(y_axis_ADA, x_axis)
 print('ADA')
@@ -366,7 +367,7 @@ plt.ylabel('Sparsity score')
 plt.legend()
 
 # Set the title of the plot
-plt.title('Sparsity LIME CIC')
+# plt.title('Sparsity LIME CIC')
 
 # Show the plot
 plt.show()
@@ -446,7 +447,7 @@ plt.plot(x_axis, y_axis_SVM, label='SVM', color='purple', linestyle='--', marker
 plt.plot(x_axis, y_axis_MLP, label='MLP', color='orange', linestyle='--', marker='h')
 
 # Plot the sixth line
-# plt.plot(x_axis, y_axis_KNN, label='KNN', color='magenta', linestyle='--', marker='+')
+plt.plot(x_axis, y_axis_KNN, label='KNN', color='magenta', linestyle='--', marker='+')
 
 # Plot the seventh line
 plt.plot(x_axis, y_axis_ADA, label='ADA', color='cyan', linestyle='--', marker='_')
@@ -463,7 +464,7 @@ plt.ylabel('Sparsity score')
 plt.legend()
 
 # Set the title of the plot
-plt.title('Sparsity LIME SML')
+# plt.title('Sparsity LIME SML')
 
 # Show the plot
 plt.show()
@@ -501,4 +502,3 @@ print('MLP')
 print(f"AUC: {auc}")
 
 ###########################################################################################################################################################################################################################################################################################################################
-
