@@ -142,7 +142,7 @@ y_axis_SVM = [0.962, 0.936, 0.918, 0.896, 0.752, 0.754]
 #ADA
 y_axis_ADA = [0.752, 0.762, 0.762, 0.751, 0.752, 0.752]
 #KNN
-y_axis_KNN =  []
+y_axis_KNN =  [0.999, 0.997, 0.999,0.999,0.999,0.999]
 #MLP
 y_axis_MLP = [0.714, 0.715, 0.715, 0.716, 0.718, 0.755]
 
@@ -181,12 +181,44 @@ plt.ylabel('Accuracy')
 plt.legend()
 
 # Set the title of the plot
-plt.title('Accuracy x Features - SHAP CIC')
+# plt.title('Accuracy x Features - SHAP CIC')
 
 # Show the plot
 plt.show()
 plt.savefig('GRAPH_ACC_SHAP_CIC.png')
 plt.clf()
+
+print('AUC - CIC SHAP')
+
+auc = np.trapz(y_axis_RF, x_axis_cic)/x_axis_cic[-1]
+print('RF')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_DNN, x_axis_cic)/x_axis_cic[-1]
+print('DNN')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_LGBM,  x_axis_cic)/x_axis_cic[-1]
+print('LGBM')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_SVM, x_axis_cic)/x_axis_cic[-1]
+print('SVM')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_KNN,  x_axis_cic)/x_axis_cic[-1]
+print('KNN')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_ADA,  x_axis_cic)/x_axis_cic[-1]
+print('ADA')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_MLP,  x_axis_cic)/x_axis_cic[-1]
+print('MLP')
+print(f"AUC: {auc}")
+
+
 ###########################################################################################################################################################################################################################################################################################################################
 #SIMARGL
 #SHAP
@@ -201,7 +233,7 @@ y_axis_SVM =  [0.932, 0.902, 0.924, 0.941]
     #ADA
 y_axis_ADA = [0.763, 0.758, 0.636, 0.67]
     #KNN
-y_axis_KNN = []
+y_axis_KNN = [0.999,0.998,0.998,0.998]
     #MLP
 y_axis_MLP =  [0.714, 0.556, 0.555, 0.555]
 
@@ -223,7 +255,7 @@ plt.plot(x_axis_sml, y_axis_SVM, label='SVM', color='purple', linestyle='--', ma
 plt.plot(x_axis_sml, y_axis_MLP, label='MLP', color='orange', linestyle='--', marker='h')
 
 # Plot the sixth line
-# plt.plot(x_axis_sml, y_axis_KNN, label='KNN', color='magenta', linestyle='--', marker='+')
+plt.plot(x_axis_sml, y_axis_KNN, label='KNN', color='magenta', linestyle='--', marker='+')
 
 # Plot the seventh line
 plt.plot(x_axis_sml, y_axis_ADA, label='ADA', color='cyan', linestyle='--', marker='_')
@@ -240,12 +272,44 @@ plt.ylabel('Accuracy')
 plt.legend()
 
 # Set the title of the plot
-plt.title('Accuracy x Features - SHAP SML')
+# plt.title('Accuracy x Features - SHAP SML')
 
 # Show the plot
 plt.show()
 plt.savefig('GRAPH_ACC_SHAP_SML.png')
 plt.clf()
+
+print('AUC - SML SHAP')
+
+auc = np.trapz(y_axis_RF, x_axis_sml)/x_axis_sml[-1]
+print('RF')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_DNN, x_axis_sml)/x_axis_sml[-1]
+print('DNN')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_LGBM, x_axis_sml)/x_axis_sml[-1]
+print('LGBM')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_SVM, x_axis_sml)/x_axis_sml[-1]
+print('SVM')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_KNN, x_axis_sml)/x_axis_sml[-1]
+print('KNN')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_ADA, x_axis_sml)/x_axis_sml[-1]
+print('ADA')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_MLP, x_axis_sml)/x_axis_sml[-1]
+print('MLP')
+print(f"AUC: {auc}")
+
+
 ###########################################################################################################################################################################################################################################################################################################################
 #CICIDS
 #LIME
@@ -293,12 +357,44 @@ plt.ylabel('Accuracy')
 plt.legend()
 
 # Set the title of the plot
-plt.title('Accuracy x Features - LIME CIC')
+# plt.title('Accuracy x Features - LIME CIC')
 
 # Show the plot
 plt.show()
 plt.savefig('GRAPH_ACC_LIME_CIC.png')
 plt.clf()
+
+print('AUC - CIC LIME')
+
+auc = np.trapz(y_axis_RF, x_axis_cic)/x_axis_cic[-1]
+print('RF')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_DNN, x_axis_cic)/x_axis_cic[-1]
+print('DNN')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_LGBM, x_axis_cic)/x_axis_cic[-1]
+print('LGBM')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_SVM, x_axis_cic)/x_axis_cic[-1]
+print('SVM')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_KNN, x_axis_cic)/x_axis_cic[-1]
+print('KNN')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_ADA, x_axis_cic)/x_axis_cic[-1]
+print('ADA')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_MLP, x_axis_cic)/x_axis_cic[-1]
+print('MLP')
+print(f"AUC: {auc}")
+
+
 ###########################################################################################################################################################################################################################################################################################################################
 #SIMARGL
 #LIME
@@ -313,7 +409,7 @@ y_axis_SVM = [0.932, 0.873, 0.913, 0.930]
     #ADA
 y_axis_ADA =  [0.762, 0.804, 0.804, 0.670] 
     #KNN
-y_axis_KNN = []
+y_axis_KNN = [0.998,0.997,0.988,  0.998   ]
     #MLP
 y_axis_MLP =  [0.555, 0.555,0.555,0.555]
 
@@ -352,7 +448,7 @@ plt.ylabel('Accuracy')
 plt.legend()
 
 # Set the title of the plot
-plt.title('Accuracy x Features - LIME SML')
+# plt.title('Accuracy x Features - LIME SML')
 
 # Show the plot
 plt.show()
@@ -360,4 +456,34 @@ plt.savefig('GRAPH_ACC_LIME_SML.png')
 plt.clf()
 
 ###########################################################################################################################################################################################################################################################################################################################
+
+print('AUC - SML LIME')
+
+auc = np.trapz(y_axis_RF, x_axis_sml)/x_axis_sml[-1]
+print('RF')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_DNN, x_axis_sml)/x_axis_sml[-1]
+print('DNN')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_LGBM, x_axis_sml)/x_axis_sml[-1]
+print('LGBM')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_SVM, x_axis_sml)/x_axis_sml[-1]
+print('SVM')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_KNN, x_axis_sml)/x_axis_sml[-1]
+print('KNN')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_ADA, x_axis_sml)/x_axis_sml[-1]
+print('ADA')
+print(f"AUC: {auc}")
+
+auc = np.trapz(y_axis_MLP, x_axis_sml)/x_axis_sml[-1]
+print('MLP')
+print(f"AUC: {auc}")
 
