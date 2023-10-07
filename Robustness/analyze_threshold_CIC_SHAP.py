@@ -37,8 +37,8 @@ ax = plt.axes()
 plt.ylim(-.05,1.05)
 plt.xlim(0,1)
 
-plt.xlabel("F1 score on OOD task")
-plt.ylabel("% explanations with race as first feature")
+plt.xlabel("F1 score on OOD task", fontsize=18)
+plt.ylabel("Ocurrence of biased feature as 1st", fontsize=18)
 
 sns.scatterplot(f1s, fsts, ax=ax)
 plt.savefig("0A_ROBUSTNESS_shap_f1_first.png")
