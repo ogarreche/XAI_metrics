@@ -482,248 +482,11 @@ start = time.time()
 preds = model.predict(X_test)
 
 
-# End the timer
-end = time.time()
-time_taken = end - start
-print(f'Time taken for pred: {time_taken} seconds')
-
-
-# In[28]:
-
-
-# summary of model layers
-model.summary()
-
-
-# In[ ]:
-
-'''
-import numpy as np
-
-# Assume you have a model "multi_target_mlp", and data "X_train" and "X_test"
-background_dataset = shap.sample(X_train, 500)
-explainer = shap.KernelExplainer(model.predict, background_dataset)
-
-# Calculate Shap values on a small sample of test data
-small_X_test = X_test[:500]
-shap_values = explainer.shap_values(small_X_test)  # shape is now [n_classes, n_samples, n_features]
-
-# Average absolute SHAP values across classes
-avg_shap_values = np.mean(shap_values, axis=0)
-
-# Plot SHAP summary
-shap.summary_plot(avg_shap_values, small_X_test, feature_names=multi_data.columns)
-
-
-# In[ ]:
-
-
-plt.savefig('shap_summary_plot_DNN.png', bbox_inches='tight')
-'''
-
-# In[ ]:
-
-
 # Convert Y_test back to its original format
 y_test = np.argmax(Y_test, axis=1)
 
 
-# In[ ]:
-
-
-#model.fit(X_train, Y_train, epochs=50, batch_size=32, verbose=0)
-
-
-# In[35]:
-
-
-# Predict classes
-preds = model.predict(X_test)
-
-
-# In[29]:
-
-
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, roc_auc_score
-import numpy as np
-
-preds=np.argmax(preds, axis=1)
-y_true_multiclass = np.argmax(Y_test, axis=1)
-confusion = confusion_matrix(y_true_multiclass, preds)
-
-# Binarize the output for AUC
-#lb = LabelBinarizer()
-#lb.fit(y_true_multiclass)
-#y_test_bin = lb.transform(y_true_multiclass)
-#y_pred_bin = lb.transform(preds)
-
-# Iterate through each class and calculate the metrics
-
-
-class_names = ['Normal','DoS', 'Probe', 'R2L', 'U2R']
-'''
-for i in range(len(class_names)):
-    TP = confusion[i, i]
-    FP = confusion[:, i].sum() - TP
-    FN = confusion[i, :].sum() - TP
-    TN = confusion.sum() - TP - FP - FN
-    
-
-    TP_total = sum(TP)
-    TN_total = sum(TN)
-    FP_total = sum(FP)
-    FN_total = sum(FN)
-
-    FPR = (FP_total / (FP_total + TN_total)) * 100
-    print("False Positive Percentage:", FPR)
-    # Call your metrics functions
-    Acc = ACC(TP, TN, FP, FN)
-    Precision = PRECISION(TP, FP)
-    Recall = RECALL(TP, FN)
-    F1_score = F1(Recall, Precision)
-    Balanced_accuracy = BACC(TP, TN, FP, FN)
-    Matthews = MCC(TP, TN, FP, FN)
-    
-    # AUC_ROC calculation
-    AUC_ROC = roc_auc_score(y_test_bin[:, i], y_pred_bin[:, i])
-    
-    # Print metrics
-    print(f'Metrics for: {class_names[i]}')
-    print('Accuracy: ', Acc)
-    print('Precision: ', Precision)
-    print('Recall: ', Recall)
-    print('F1: ', F1_score)
-    print('BACC: ', Balanced_accuracy)
-    print('MCC: ', Matthews)
-    print('AUC_ROC: ', AUC_ROC)
-    print()
-
-# AUC_ROC total
-print('AUC_ROC total: ', roc_auc_score(y_test_bin, y_pred_bin, multi_class='ovr'))
-print('---------------------------------------------------------------------------------')
-
-
-# In[31]:
-
-
-
-
-# In[36]:
-
-
-pred_labels = np.argmax(preds, axis=1)
-
-
-# In[37]:
-
-
-correctly_classified_indices = np.where(pred_labels == y_test)[0]
-misclassified_indices = np.where(pred_labels != y_test)[0]
-
-
-# In[38]:
-
-
-misclassified_indices[:20]
-
-
-# In[39]:
-
-
-Y_train = Y_train.flatten()
-
-
-# In[40]:
-
-
-import lime
-import lime.lime_tabular
-
-
-# In[41]:
-
-
-# Create a Lime explainer object
-explainer = lime.lime_tabular.LimeTabularExplainer(
-    training_data=X_train.values, 
-    feature_names=X_train.columns, 
-    class_names=class_names, 
-    mode='classification'
-)
-
-
-
-
-# In[66]:
-
-
-misclassified_indices
-
-
-
-
-# Select a correctly classified instance
-
-
-correct_instance = X_test.iloc[correctly_classified_indices[0]].values
-correct_exp = explainer.explain_instance(
-correct_instance, 
-model.predict, 
-num_features=7, 
-top_labels=1
-)
-
-misclassified_instance = X_test.iloc[misclassified_indices[200]].values
-
-
-# Explain this instance with LIME
-misclassified_exp = explainer.explain_instance(
-misclassified_instance, 
-model.predict, 
-num_features=10, 
-top_labels=1
-)
-    
-
-
-
-
-# In[102]:
-
-
-print(y_test[misclassified_indices[200]], pred_labels[misclassified_indices[200]])
-
-
-# In[103]:
-
-
-misclassified_exp.as_list(label=0)
-
-
-# In[104]:
-
-
-print(misclassified_exp.local_exp.keys())
-
-
-# In[105]:
-
-
-misclassified_exp.show_in_notebook(show_table=True, show_all=False)
-plt.show()
-
-
-# In[100]:
-
-
-misclassified_exp.show_in_notebook(show_table=True, show_all=False)
-
-
-plt.show()
-'''
-
-# In[33]:
-
+#Uncomment below lines to get Sorted featurs for Shap and Line
 '''
 # Use KernelExplainer for model agnostic
 explainer = shap.KernelExplainer(model.predict, shap.sample(X_train, 500))
@@ -786,7 +549,7 @@ import lime
 import lime.lime_tabular
 
 
-# ... (include necessary imports for your model and data)
+# 
 explainer = lime.lime_tabular.LimeTabularExplainer(
     X_train.values,
     training_labels=Y_train,
@@ -836,7 +599,7 @@ print(average_maz_scores)
 import shap
 import numpy as np
 
-# ... (include necessary imports for your model and data)
+# 
 
 # Initialize the KernelExplainer
 explainer = shap.KernelExplainer(model.predict, shap.sample(X_train, 100))
