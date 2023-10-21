@@ -25,12 +25,35 @@ We initialized our evaluation by assigning importance scores to intrusion featur
 2. Descriptive Accuracy
 We commenced with the evaluation of the descriptive accuracy of XAI methods on network intrusion datasets. Figures 2-3 (to be inserted by the author) exhibit the descriptive accuracy for SHAP and LIME under three distinct datasets. The insights gained underscore SHAP’s superiority over LIME in terms of global explainability.
 
+
+
+![DA Graphs](DA_Graphs.png)
+
+
+
+![DA Table](DA_Table.png)
+
+
+
 Main Insights:
 A noticeable drop in accuracy with the removal of features was observed predominantly in NSL-KDD dataset.
 SHAP outperformed LIME, as detailed in Table 7.
 An anomaly was detected where accuracy remained consistent or increased under top feature removal, raising speculations regarding equal feature contributions or the ‘‘curse of dimensionality’’.
+
+
 3. Sparsity
 The subsequent metric, sparsity, assessed the distribution of feature importance scores. Figures 4-5 (to be inserted by the author) illustrate the sparsity for SHAP and LIME. SHAP again surfaced as the victor, evidencing superior performance in terms of concentrated explanations.
+
+
+
+![Sparsity Table](Sparsity_Table.png)
+
+
+
+
+![Sparsity Graphs](Sparsity_Graphs.png)
+
+
 
 Main Insights:
 SHAP's concentration of explanations in fewer intrusion features underscores its low sparsity and elevated explainability.
