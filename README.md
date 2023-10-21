@@ -20,10 +20,10 @@ Our empirical findings unveil the intrinsic limitations and unparalleled strengt
 
 ### Evaluation Results
 1. Prelude - Feature Selection
-We initialized our evaluation by assigning importance scores to intrusion features, which were then used in subsequent experiments. Each AI model generated global explanations via SHAP and LIME. During trials for descriptive accuracy and sparsity, we experimented with the removal of top-k features, determining their impact on the model’s performance. Stability was evaluated through repeated trials. Robustness and completeness were assessed on a local level, analyzing individual explanations during integrity attacks and perturbations. The efficiency experiment assessed computational time required for SHAP and LIME under varied scenarios.
+We initialized our evaluation by assigning importance scores to intrusion features, which were then used in subsequent experiments. Each AI model generated global explanations via SHAP and LIME. During trials for descriptive accuracy, sparsity, Stability, Robustness and Completeness. we experimented with the removal of top-k features, determining their impact on the model’s performance. Stability was evaluated through repeated trials. Robustness and completeness were assessed on a local level, analyzing individual explanations during integrity attacks and perturbations. The efficiency experiment assessed computational time required for SHAP and LIME under varied scenarios.
 
 2. Descriptive Accuracy
-We commenced with the evaluation of the descriptive accuracy of XAI methods on network intrusion datasets. Figures 2-3 (to be inserted by the author) exhibit the descriptive accuracy for SHAP and LIME under three distinct datasets. The insights gained underscore SHAP’s superiority over LIME in terms of global explainability.
+We commenced with the evaluation of the descriptive accuracy of XAI methods on network intrusion datasets. Figures 2-3 exhibit the descriptive accuracy for SHAP and LIME under three distinct datasets. The insights gained underscore SHAP’s superiority over LIME in terms of global explainability.
 
 
 
@@ -42,7 +42,7 @@ An anomaly was detected where accuracy remained consistent or increased under to
 
 
 3. Sparsity
-The subsequent metric, sparsity, assessed the distribution of feature importance scores. Figures 4-5 (to be inserted by the author) illustrate the sparsity for SHAP and LIME. SHAP again surfaced as the victor, evidencing superior performance in terms of concentrated explanations.
+The subsequent metric, sparsity, assessed the distribution of feature importance scores. Figures 4-5 illustrate the sparsity for SHAP and LIME. SHAP again surfaced as the victor, evidencing superior performance in terms of concentrated explanations.
 
 
 
