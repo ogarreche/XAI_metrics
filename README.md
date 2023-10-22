@@ -258,6 +258,12 @@ models, indicating a nuanced performance that depends
 heavily on the specific combination of the dataset, AI model,
 and XAI explanation method.
 
+A heatmap analysis that shows the common top features across different AI models and the two XAI methods
+(SHAP and LIME) for all of the three studied datasets. The number of matched features are shown for each pair.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/5b71e08c-4962-4f83-8f10-7fe648c4f4c6)
+
+
 References:
 
 Robustness based on: https://github.com/dylan-slack/Fooling-LIME-SHAP/
