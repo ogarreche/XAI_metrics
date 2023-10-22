@@ -11,6 +11,9 @@ The robustness and versatility of our XAI evaluation framework is validated thro
 
 Our empirical findings unveil the intrinsic limitations and unparalleled strengths inherent in contemporary black-box XAI methods when meticulously applied to network IDS, offering invaluable insights and serving as a catalyst for future exploratory endeavors in this domain.
 
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/ea663c33-657b-42ee-a865-99fac4a2535d)
+
+
 ### Key Features
 - Comprehensive evaluation of black-box XAI methods for network IDS.
 - Detailed analysis using six distinct metrics, offering insights from network security and AI perspectives.
@@ -53,8 +56,6 @@ The subsequent metric, sparsity, assessed the distribution of feature importance
 
 ![Sparsity Graphs](Sparsity_Graphs.png)
 
-
-
 Main Insights:
 SHAP's concentration of explanations in fewer intrusion features underscores its low sparsity and elevated explainability.
 The AUC curves’ exponential growth shape, especially evident in SHAP’s performance, underscores the concentration of explanation in top features.
@@ -66,7 +67,23 @@ Table 8 provides a quantitative overview of the sparsity metric, illuminating th
 Figures 2-3 illustrate the descriptive accuracy of SHAP and LIME XAI methods under the three evaluated network intrusion datasets.
 Figures 4-5 depict the sparsity results for both XAI methods, offering a comparative lens to evaluate the concentration of XAI explanations with respect to intrusion features.
 
+4. Robustness
+
+
+
+Main Insights:   
+5. Efficiency
+
+
+
+Main Insights: 
+6. Completeness
+
+
+Main Insights:
+
 References:
+
 Robustness based on: https://github.com/dylan-slack/Fooling-LIME-SHAP/
 
 Six metrics evaluated are based on: https://arxiv.org/abs/1906.02108
