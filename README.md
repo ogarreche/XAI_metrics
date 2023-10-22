@@ -22,10 +22,10 @@ Our empirical findings unveil the intrinsic limitations and unparalleled strengt
 
 
 ### Evaluation Results
-1. Prelude - Feature Selection
+0. Prelude - Feature Selection
 We initialized our evaluation by assigning importance scores to intrusion features, which were then used in subsequent experiments. Each AI model generated global explanations via SHAP and LIME. During trials for descriptive accuracy, sparsity, Stability, Robustness and Completeness. we experimented with the removal of top-k features, determining their impact on the model’s performance. Stability was evaluated through repeated trials. Robustness and completeness were assessed on a local level, analyzing individual explanations during integrity attacks and perturbations. The efficiency experiment assessed computational time required for SHAP and LIME under varied scenarios.
 
-2. Descriptive Accuracy
+1. Descriptive Accuracy
 We commenced with the evaluation of the descriptive accuracy of XAI methods on network intrusion datasets. Figures 2-3 exhibit the descriptive accuracy for SHAP and LIME under three distinct datasets. The insights gained underscore SHAP’s superiority over LIME in terms of global explainability.
 
 
@@ -44,7 +44,7 @@ SHAP outperformed LIME, as detailed in Table 7.
 An anomaly was detected where accuracy remained consistent or increased under top feature removal, raising speculations regarding equal feature contributions or the ‘‘curse of dimensionality’’.
 
 
-3. Sparsity
+2. Sparsity
 The subsequent metric, sparsity, assessed the distribution of feature importance scores. Figures 4-5 illustrate the sparsity for SHAP and LIME. SHAP again surfaced as the victor, evidencing superior performance in terms of concentrated explanations.
 
 
@@ -67,20 +67,117 @@ Table 8 provides a quantitative overview of the sparsity metric, illuminating th
 Figures 2-3 illustrate the descriptive accuracy of SHAP and LIME XAI methods under the three evaluated network intrusion datasets.
 Figures 4-5 depict the sparsity results for both XAI methods, offering a comparative lens to evaluate the concentration of XAI explanations with respect to intrusion features.
 
-4. Robustness
+3. Robustness:
+
+The robustness of an XAI method can be
+defined as the ability of that XAI method in generating
+the same explanations under small perturbation in the
+intrusion features. Such perturbation can be due to
+computational errors or an adversarial attack. For this
+work, we adapted the adversarial model of the work [24].
+This adversarial model consists of training an extremely
+biased model that will rely only on one feature to base
+its prediction on, and training another model with all
+the features plus a new feature that is engineered to fool
+the XAI explanation method. Based on such two trained
+models, XAI will generate an explanation of a normal
+sample that is convincing to a security analyst while in
+reality the real sample was hidden from the XAI method.
+This can compromise the integrity of the framework
+via disconnecting the explanation from the underlying
+behavior, and thus disguise an attack as normal network
+traffic.
 
 
 
 Main Insights:   
-5. Efficiency
+4. Efficiency
 
-
+The efficiency of an XAI method can be
+defined as how much time the XAI method takes
+to generate an explanation. This metric is important
+because it measures the applicability of the XAI method
+in real-world systems since it is preferable that the
+explanations are generated quickly rather than slowly
+for practical purposes. As the ultimate goal is to aid
+security analysts, the expectation is to be able to
+generate accurate XAI explanations in real-time to detect
+intrusions in a timely manner.
 
 Main Insights: 
-6. Completeness
+5. Completeness
+
+The completeness characteristic of an
+XAI method refers to the ability of XAI method
+in providing a correct explanation for every possible
+network traffic sample, including corner cases. If the
+XAI method is not complete, this opens the door for
+the intruders to exploit and trick the XAI method to
+create degenerated results. We emphasize that if an XAI
+is complete, it automatically becomes more robust (i.e.,
+its reliability for the end user is increased because it can
+detect whether the explanation is valid). Nonetheless,
+while the measure for completeness is by checking that
+every sample has a valid explanation, the robustness
+metric in this work refers to how resistant an XAI
+framework is when facing an adversarial attack.
+
+Main Insights:
+
+6. Stability:
+
+The stability metric measures how consistent
+the XAI method is in generating its explanations. This is
+measured via checking how many features are common
+among different running trials with the same conditions.
+An XAI method with higher stability can be trusted more
+by the security analyst in network intrusion detection
+process.
+
+The global stability evaluation metric of XAI
+methods. We measure such stability by calculating the
+percentage of features that intersect in different runs among
+the total number of features for several network traffic
+instances.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/1fa73a88-eaec-4c4a-bc08-3a5a38c92e91)
+
+The local stability evaluation metric of XAI
+methods. We measure such stability by calculating the
+percentage of features that intersect in different runs among
+the total number of features for single network traffic
+instance.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/d6e2ee3e-3d20-4dfa-a186-c165e4f336ca)
 
 
 Main Insights:
+
+As expected, local stability is higher
+than global due to the fact that it runs the same instance
+instead of a collection of samples, which are prone to have
+more differences by pure chance. From our experimental
+results (see Tables 9-10), we notice that LIME and
+SHAP perform roughly the same with respect to this
+category. For CICIDS-2017 dataset, global LIME has better
+performance compared to SHAP for four models (RF,
+DNN, LGBM, and MLP) while SHAP performed better
+for only two models (SVM and KNN). For CICIDS-2017,
+local LIME performed better in two models (RF and
+LGBM) and it was tied with SHAP for the other five
+models. For RoEduNet-SIMARGL2021 dataset, global
+LIME outperforms SHAP one time (LGBM) while the same
+is true for SHAP (DNN) and the remaining results are tied.
+For RoEduNet-SIMARGL2021, local SHAP outperforms
+LIME one time (DNN) and the remaining results are tied.
+For NSL-KDD dataset, there is a noticeable difference in the
+stability of LIME and SHAP explanations across different
+AI models. In terms of global stability, LIME showed better
+stability with RF, DNN, and MLP, while SHAP was more stable with LGBM, ADA, SVM, and KNN. However, the
+local stability of LIME and SHAP varied with different
+models, indicating a nuanced performance that depends
+heavily on the specific combination of the dataset, AI model,
+and XAI explanation method.
 
 References:
 
