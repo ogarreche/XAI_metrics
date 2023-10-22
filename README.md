@@ -88,6 +88,33 @@ via disconnecting the explanation from the underlying
 behavior, and thus disguise an attack as normal network
 traffic.
 
+FIGURE 8: The percentage of data samples in CICIDS-2017 dataset for which biased and unrelated features appear in top-3
+features (according to LIME and SHAP rankings of feature importance) for the biased classifier (in (a) and (c)) and adversarial
+classifier (in (b) and (d)) that uses one uncorrelated feature.
+
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/25e18abe-c7fa-43bc-9c1c-38cf0102ba50)
+
+FIGURE 9: The percentage of data samples in RoEduNet-SIMARGL2021 dataset for which biased and unrelated features
+appear in top-3 features (according to LIME and SHAP rankings of feature importance) for the biased classifier (in (a) and (c))
+and adversarial classifier (in (b) and (d)) that uses one uncorrelated feature.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/9227c722-7cb4-4d08-bfd0-4be1d5a8daea)
+
+FIGURE 10: The feature occurence percentage of data samples in NSL-KDD dataset for which biased and unrelated features
+appear in top-3 features (according to LIME and SHAP rankings of feature importance) for the biased classifier (in (a) and (c))
+and adversarial classifier (in (b) and (d)).
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/6e20b1c7-35c7-4e3f-a83d-47d308c5b3ee)
+
+FIGURE 11: Robustness sensitivity for LIME for all three network intrusion datasets.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/7410fd57-d032-4841-8595-4d893c5e904b)
+
+
+FIGURE 12: Robustness sensitivity for SHAP for all three network intrusion datasets.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/1e5cf443-dd3f-4615-bb28-5286a13ec86e)
 
 
 Main Insights:   
@@ -103,6 +130,12 @@ for practical purposes. As the ultimate goal is to aid
 security analysts, the expectation is to be able to
 generate accurate XAI explanations in real-time to detect
 intrusions in a timely manner.
+
+The efficiency (amount of time in hours) for generating SHAP and LIME explanations for different AI models and
+different number of samples.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/9eb345df-d07b-4860-88c0-13b0210ae9b4)
+
 
 Main Insights: 
 5. Completeness
@@ -121,6 +154,15 @@ while the measure for completeness is by checking that
 every sample has a valid explanation, the robustness
 metric in this work refers to how resistant an XAI
 framework is when facing an adversarial attack.
+
+
+Percentage of remaining network traffic samples after removing the samples in which the intrusion class changed
+under different perturbation levels in intrusion features. We observe that higher perturbations tend to change classes for both
+LIME and SHAP for all three datasets.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/fd90af3f-8a5d-4bb7-bfc1-74cf5a454402)
+
+
 
 Main Insights:
 
