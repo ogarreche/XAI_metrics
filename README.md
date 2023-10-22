@@ -13,6 +13,22 @@ Our empirical findings unveil the intrinsic limitations and unparalleled strengt
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/ea663c33-657b-42ee-a865-99fac4a2535d)
 
+In a high-level fashion, our framework starts by loading
+well renowned network intrusion datasets that contain
+traffic logs from the network of interest. After collecting
+network’s data, our framework feeds such data into different
+black-box AI models where these models detect intrusions
+and normal traffic via constructing a multi-class classification
+problem. In this classification problem, each class represents
+one possible network intrusion (e.g., denial of service,
+port-scanning, and brute force attacks). After predicting
+traffic instances using the black-box AI model, the following
+step is to pass these predictions into XAI methods to
+generate the explanations of the instances and the associated
+predictions. Then, our framework evaluate these XAI
+methods via leveraging the six XAI evaluation metrics (i.e.,
+descriptive accuracy, sparsity, efficiency, stability, robustness,
+and completeness).
 
 ### Key Features
 - Comprehensive evaluation of black-box XAI methods for network IDS.
@@ -123,6 +139,8 @@ FIGURE 12: Robustness sensitivity for SHAP for all three network intrusion datas
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/1e5cf443-dd3f-4615-bb28-5286a13ec86e)
 
+How use Robustness program:
+Inside the Robustness folder, firts run the code: threshold_CIC.py to generate a csv file. Then run analyze_threshold_CIC_LIME.py to generate the Robustness Sensitivity graph. and run the program RF_SHAP_CIC_bar.ipynb to generate the robustness bar graphs. 
 
 Main Insights:   
 4. Efficiency
@@ -263,6 +281,10 @@ A heatmap analysis that shows the common top features across different AI models
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/5b71e08c-4962-4f83-8f10-7fe648c4f4c6)
 
+
+Datasets:
+
+Download one of the datasets. RoEduNet-SIMARGL2021: https://www.kaggle.com/datasets/7f91274fa3074d53e983f6eb7a7b24ad1dca136ca967ad0ebe48955e246c24ee CICIDS-2017: https://www.kaggle.com/datasets/cicdataset/cicids2017
 
 References:
 
