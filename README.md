@@ -88,6 +88,13 @@ via disconnecting the explanation from the underlying
 behavior, and thus disguise an attack as normal network
 traffic.
 
+An example of DoS sample from NSL-KDD dataset for robustness experiment using SHAP. In (a), the feature list
+(with flow duration as the top feature) under biased explanation is shown. In (b), the list (with engineered feature as the top
+feature) after adversarial model’s classification is shown
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/31ec7d63-7f8c-47da-9f01-76e9c64017a5)
+
+
 FIGURE 8: The percentage of data samples in CICIDS-2017 dataset for which biased and unrelated features appear in top-3
 features (according to LIME and SHAP rankings of feature importance) for the biased classifier (in (a) and (c)) and adversarial
 classifier (in (b) and (d)) that uses one uncorrelated feature.
@@ -162,6 +169,36 @@ LIME and SHAP for all three datasets.
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/fd90af3f-8a5d-4bb7-bfc1-74cf5a454402)
 
+The percentage of samples that are complete (i.e.,
+with valid explanations) for each intrusion class using SHAP
+and LIME for RoEduNet-SIMARGL2021 dataset.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/d3c5fd3b-6afa-4c03-9ce4-d5d3221400e4)
+
+he percentage of samples that are complete
+(i.e., with valid explanations) for each intrusion class using
+CICIDS-2017 dataset.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/0a7afa64-1841-44c4-932f-d5f5df1ec8e7)
+
+The percentage of samples that are complete for
+each class using NSL-KDD dataset.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/d203678e-ddb5-477a-9cfe-310ae4331944)
+
+The LIME analysis of completeness experiment
+on the DoS sample from RoEduNet-SIMARGL2021 dataset.
+In first quadrant, we show the original explanation. In second
+quadrant, we show it after the top feature is perturbed. In third
+quadrant, we show it after the second top feature is perturbed.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/f80f5505-6bd1-490f-8a6f-559604374e0b)
+
+An example of completeness experiment on DoS sample from RoEduNet-SIMARGL2021 dataset. This experiment
+is using SHAP method. In (a), we show the original XAI explanation. In (b), we show it after the top feature is perturbed. In
+(c), we show it after the second top feature is perturbed.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/0b05cffe-2b01-43ca-a7f4-9d3f888f3ac0)
 
 
 Main Insights:
