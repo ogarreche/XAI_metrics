@@ -358,8 +358,23 @@ CICIDS-2017: https://www.kaggle.com/datasets/cicdataset/cicids2017
 
 NSL-KDD: https://www.unb.ca/cic/datasets/nsl.html
 
-### How use Robustness program:
+### How to use the programs:
+
+Descriptive Accuracy:
+
+Sparsity:
+
+Stability:
+
+Robustness:
+
 Inside the Robustness folder, firts run the code: threshold_CIC.py to generate a csv file. Then run analyze_threshold_CIC_LIME.py to generate the Robustness Sensitivity graph. and run the program RF_SHAP_CIC_bar.ipynb to generate the robustness bar graphs. 
+
+Completeness:
+
+Efficiency:
+
+
 
 ### References:
 
