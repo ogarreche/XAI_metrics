@@ -213,24 +213,24 @@ LIME and SHAP for all three datasets.
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/fd90af3f-8a5d-4bb7-bfc1-74cf5a454402)
 
-The percentage of samples that are complete (i.e.,
+TABLE 12:  The percentage of samples that are complete (i.e.,
 with valid explanations) for each intrusion class using SHAP
 and LIME for RoEduNet-SIMARGL2021 dataset.
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/d3c5fd3b-6afa-4c03-9ce4-d5d3221400e4)
 
-he percentage of samples that are complete
+TABLE 13: The percentage of samples that are complete
 (i.e., with valid explanations) for each intrusion class using
 CICIDS-2017 dataset.
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/0a7afa64-1841-44c4-932f-d5f5df1ec8e7)
 
-The percentage of samples that are complete for
+TABLE 14: The percentage of samples that are complete for
 each class using NSL-KDD dataset.
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/d203678e-ddb5-477a-9cfe-310ae4331944)
 
-The LIME analysis of completeness experiment
+FIGURE 14: The LIME analysis of completeness experiment
 on the DoS sample from RoEduNet-SIMARGL2021 dataset.
 In first quadrant, we show the original explanation. In second
 quadrant, we show it after the top feature is perturbed. In third
@@ -238,7 +238,7 @@ quadrant, we show it after the second top feature is perturbed.
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/f80f5505-6bd1-490f-8a6f-559604374e0b)
 
-An example of completeness experiment on DoS sample from RoEduNet-SIMARGL2021 dataset. This experiment
+FIGURE 13: An example of completeness experiment on DoS sample from RoEduNet-SIMARGL2021 dataset. This experiment
 is using SHAP method. In (a), we show the original XAI explanation. In (b), we show it after the top feature is perturbed. In
 (c), we show it after the second top feature is perturbed.
 
@@ -246,6 +246,21 @@ is using SHAP method. In (a), we show the original XAI explanation. In (b), we s
 
 
 Main Insights:
+
+-Since we use the same method for
+feature perturbation for SHAP and LIME, we conclude that
+LIME tends to under-perform in terms of global completeness
+when dealing with multiclass classification with more
+intrusion labels. For NSL-KDD dataset, Table 14 show that
+the performance of SHAP and LIME differs significantly
+for this dataset. In every class, SHAP performs noticeably
+better than LIME, especially in the ‘‘Normal" and ‘‘DoS"
+categories. This discrepancy confirms SHAP’s effectiveness
+for complex and diverse datasets like NSL-KDD. To sum
+up, our experiments highlight that SHAP is more complete
+than LIME, indicating that it can provide more thorough
+and dependable interpretability in intricate classification
+scenarios.
 
 6. Stability:
 
