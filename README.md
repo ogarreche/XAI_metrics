@@ -207,11 +207,29 @@ metric in this work refers to how resistant an XAI
 framework is when facing an adversarial attack.
 
 
-Percentage of remaining network traffic samples after removing the samples in which the intrusion class changed
-under different perturbation levels in intrusion features. We observe that higher perturbations tend to change classes for both
-LIME and SHAP for all three datasets.
+
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/0b05cffe-2b01-43ca-a7f4-9d3f888f3ac0)
+
+FIGURE 13: An example of completeness experiment on DoS sample from RoEduNet-SIMARGL2021 dataset. This experiment
+is using SHAP method. In (a), we show the original XAI explanation. In (b), we show it after the top feature is perturbed. In
+(c), we show it after the second top feature is perturbed.
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/f80f5505-6bd1-490f-8a6f-559604374e0b)
+
+FIGURE 14: The LIME analysis of completeness experiment
+on the DoS sample from RoEduNet-SIMARGL2021 dataset.
+In first quadrant, we show the original explanation. In second
+quadrant, we show it after the top feature is perturbed. In third
+quadrant, we show it after the second top feature is perturbed.
+
+
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/fd90af3f-8a5d-4bb7-bfc1-74cf5a454402)
+
+FIGURE 16: Percentage of remaining network traffic samples after removing the samples in which the intrusion class changed
+under different perturbation levels in intrusion features. We observe that higher perturbations tend to change classes for both
+LIME and SHAP for all three datasets.
 
 TABLE 12:  The percentage of samples that are complete (i.e.,
 with valid explanations) for each intrusion class using SHAP
@@ -230,19 +248,8 @@ each class using NSL-KDD dataset.
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/d203678e-ddb5-477a-9cfe-310ae4331944)
 
-FIGURE 14: The LIME analysis of completeness experiment
-on the DoS sample from RoEduNet-SIMARGL2021 dataset.
-In first quadrant, we show the original explanation. In second
-quadrant, we show it after the top feature is perturbed. In third
-quadrant, we show it after the second top feature is perturbed.
 
-![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/f80f5505-6bd1-490f-8a6f-559604374e0b)
 
-FIGURE 13: An example of completeness experiment on DoS sample from RoEduNet-SIMARGL2021 dataset. This experiment
-is using SHAP method. In (a), we show the original XAI explanation. In (b), we show it after the top feature is perturbed. In
-(c), we show it after the second top feature is perturbed.
-
-![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/0b05cffe-2b01-43ca-a7f4-9d3f888f3ac0)
 
 
 Main Insights:
