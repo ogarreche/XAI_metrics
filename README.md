@@ -257,7 +257,7 @@ An XAI method with higher stability can be trusted more
 by the security analyst in network intrusion detection
 process.
 
-The global stability evaluation metric of XAI
+TABLE 9: The global stability evaluation metric of XAI
 methods. We measure such stability by calculating the
 percentage of features that intersect in different runs among
 the total number of features for several network traffic
@@ -265,7 +265,7 @@ instances.
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/1fa73a88-eaec-4c4a-bc08-3a5a38c92e91)
 
-The local stability evaluation metric of XAI
+TABLE 10: The local stability evaluation metric of XAI
 methods. We measure such stability by calculating the
 percentage of features that intersect in different runs among
 the total number of features for single network traffic
@@ -302,7 +302,7 @@ models, indicating a nuanced performance that depends
 heavily on the specific combination of the dataset, AI model,
 and XAI explanation method.
 
-A heatmap analysis that shows the common top features across different AI models and the two XAI methods
+7. A heatmap analysis that shows the common top features across different AI models and the two XAI methods
 (SHAP and LIME) for all of the three studied datasets. The number of matched features are shown for each pair.
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/5b71e08c-4962-4f83-8f10-7fe648c4f4c6)
