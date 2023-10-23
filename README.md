@@ -11,6 +11,9 @@ The robustness and versatility of our XAI evaluation framework is validated thro
 
 Our empirical findings unveil the intrinsic limitations and unparalleled strengths inherent in contemporary black-box XAI methods when meticulously applied to network IDS, offering invaluable insights and serving as a catalyst for future exploratory endeavors in this domain.
 
+
+### Framework
+
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/ea663c33-657b-42ee-a865-99fac4a2535d)
 
 In a high-level fashion, our framework starts by loading
@@ -143,6 +146,21 @@ How use Robustness program:
 Inside the Robustness folder, firts run the code: threshold_CIC.py to generate a csv file. Then run analyze_threshold_CIC_LIME.py to generate the Robustness Sensitivity graph. and run the program RF_SHAP_CIC_bar.ipynb to generate the robustness bar graphs. 
 
 Main Insights:   
+
+-LIME performs better than SHAP for the NSL-KDD
+dataset, bringing more exposure to the biased feature. On
+the other hand, LIME performs worse than SHAP for
+CICIDS-2017 and RoEduNet-SIMARGL2021 datasets with
+fewer occurrences of the biased feature. Overall, SHAP
+technique performed better than LIME for two of the three
+datasets selected for this study in this experiment.
+
+-Overall, although LIME and SHAP are both
+vulnerable to such attacks starting at a certain threshold, our
+experiments show that LIME is slightly more robust since
+its initial threshold towards attacks of this kind being higher
+compared to SHAP.
+
 4. Efficiency
 
 The efficiency of an XAI method can be
