@@ -118,7 +118,7 @@ def get_and_preprocess_cicids(params):
     UNPROTECTED_CLASS = params.unprotected_class
     POSITIVE_OUTCOME = params.positive_outcome
     NEGATIVE_OUTCOME = params.negative_outcome	
-    fraction = 0.01
+    fraction = 0.5
     frac_normal = 0.3
     # req_cols = [' Destination Port',' Flow Duration',' Total Fwd Packets',' Total Backward Packets','Total Length of Fwd Packets',' Total Length of Bwd Packets',' Fwd Packet Length Max',' Fwd Packet Length Min',' Fwd Packet Length Mean',' Fwd Packet Length Std','Bwd Packet Length Max',' Bwd Packet Length Min',' Bwd Packet Length Mean',' Bwd Packet Length Std','Flow Bytes/s',' Flow Packets/s',' Flow IAT Mean',' Flow IAT Std',' Flow IAT Max',' Flow IAT Min','Fwd IAT Total',' Fwd IAT Mean',' Fwd IAT Std',' Fwd IAT Max',' Fwd IAT Min','Bwd IAT Total',' Bwd IAT Mean',' Bwd IAT Std',' Bwd IAT Max',' Bwd IAT Min','Fwd PSH Flags',' Bwd PSH Flags',' Fwd URG Flags',' Bwd URG Flags',' Fwd Header Length',' Bwd Header Length','Fwd Packets/s',' Bwd Packets/s',' Min Packet Length',' Max Packet Length',' Packet Length Mean',' Packet Length Std',' Packet Length Variance','FIN Flag Count',' SYN Flag Count',' RST Flag Count',' PSH Flag Count',' ACK Flag Count',' URG Flag Count',' CWE Flag Count',' ECE Flag Count',' Down/Up Ratio',' Average Packet Size',' Avg Fwd Segment Size',' Avg Bwd Segment Size',' Fwd Header Length','Fwd Avg Bytes/Bulk',' Fwd Avg Packets/Bulk',' Fwd Avg Bulk Rate',' Bwd Avg Bytes/Bulk',' Bwd Avg Packets/Bulk','Bwd Avg Bulk Rate','Subflow Fwd Packets',' Subflow Fwd Bytes',' Subflow Bwd Packets',' Subflow Bwd Bytes','Init_Win_bytes_forward',' Init_Win_bytes_backward',' act_data_pkt_fwd',' min_seg_size_forward','Active Mean',' Active Std',' Active Max',' Active Min','Idle Mean',' Idle Std',' Idle Max',' Idle Min',' Label']
     
@@ -196,4 +196,129 @@ def get_and_preprocess_cicids(params):
     y = np.array([POSITIVE_OUTCOME if p == 0 else NEGATIVE_OUTCOME for p in y.values])
     # y = np.array([POSITIVE_OUTCOME if p == 1 else NEGATIVE_OUTCOME for p in y.values])
 
+    return X, y, cols
+
+def get_and_preprocess_simargl(params):
+    """"Handle processing of German.  We use a preprocessed version of German from Ustun et. al.
+    https://arxiv.org/abs/1809.06514.  Thanks Berk!
+
+    Parameters:
+    ----------
+    params : Params
+
+    Returns:
+    ----------
+    Pandas data frame X of processed data, np.ndarray y, and list of column names
+    """
+    PROTECTED_CLASS = params.protected_class
+    UNPROTECTED_CLASS = params.unprotected_class
+    POSITIVE_OUTCOME = params.positive_outcome
+    NEGATIVE_OUTCOME = params.negative_outcome	
+
+    fraction = 0.1
+    frac_normal = .2
+
+    # req_cols = ['FLOW_DURATION_MILLISECONDS','FIRST_SWITCHED',
+    #         'TOTAL_FLOWS_EXP','TCP_WIN_MSS_IN','LAST_SWITCHED',
+    #         'TCP_WIN_MAX_IN','TCP_WIN_MIN_IN','TCP_WIN_MIN_OUT',
+    #        'PROTOCOL','TCP_WIN_MAX_OUT','TCP_FLAGS',
+    #         'TCP_WIN_SCALE_OUT','TCP_WIN_SCALE_IN','SRC_TOS',
+    #         'DST_TOS','FLOW_ID','L4_SRC_PORT','L4_DST_PORT',
+    #        'MIN_IP_PKT_LEN','MAX_IP_PKT_LEN','TOTAL_PKTS_EXP',
+    #        'TOTAL_BYTES_EXP','IN_BYTES','IN_PKTS','OUT_BYTES','OUT_PKTS',
+    #         'ALERT']
+
+
+    req_cols = ['FLOW_DURATION_MILLISECONDS',
+                            'L4_DST_PORT','TCP_WIN_MSS_IN',
+                            'OUT_PKTS','IN_PKTS', 'ALERT']
+
+    print('Loading Database')
+    print('--------------------------------------------------')
+
+    #Denial of Service
+    df0 = pd.read_csv ('sensor_db/dos-03-15-2022-15-44-32.csv', usecols=req_cols)
+    df1 = pd.read_csv ('sensor_db/dos-03-16-2022-13-45-18.csv', usecols=req_cols)
+    df2 = pd.read_csv ('sensor_db/dos-03-17-2022-16-22-53.csv', usecols=req_cols)
+    df3 = pd.read_csv ('sensor_db/dos-03-18-2022-19-27-05.csv', usecols=req_cols)
+    df4 = pd.read_csv ('sensor_db/dos-03-19-2022-20-01-53.csv', usecols=req_cols)
+    df5 = pd.read_csv ('sensor_db/dos-03-20-2022-14-27-54.csv', usecols=req_cols)
+
+    #Normal
+    df7 = pd.read_csv  ('sensor_db/normal-03-15-2022-15-43-44.csv', usecols=req_cols)
+    df8 = pd.read_csv  ('sensor_db/normal-03-16-2022-13-44-27.csv', usecols=req_cols)
+    df9 = pd.read_csv  ('sensor_db/normal-03-17-2022-16-21-30.csv', usecols=req_cols)
+    df10 = pd.read_csv ('sensor_db/normal-03-18-2022-19-17-31.csv', usecols=req_cols)
+    df11 = pd.read_csv ('sensor_db/normal-03-18-2022-19-25-48.csv', usecols=req_cols)
+    df12 = pd.read_csv ('sensor_db/normal-03-19-2022-20-01-16.csv', usecols=req_cols)
+    df13 = pd.read_csv ('sensor_db/normal-03-20-2022-14-27-30.csv', usecols=req_cols)
+
+    #PortScanning
+    df14 = pd.read_csv  ('sensor_db/portscanning-03-15-2022-15-44-06.csv', usecols=req_cols)
+    df15 = pd.read_csv  ('sensor_db/portscanning-03-16-2022-13-44-50.csv', usecols=req_cols)
+    df16 = pd.read_csv  ('sensor_db/portscanning-03-17-2022-16-22-53.csv', usecols=req_cols)
+    df17 = pd.read_csv  ('sensor_db/portscanning-03-18-2022-19-27-05.csv', usecols=req_cols)
+    df18 = pd.read_csv  ('sensor_db/portscanning-03-19-2022-20-01-45.csv', usecols=req_cols)
+    df19 = pd.read_csv  ('sensor_db/portscanning-03-20-2022-14-27-49.csv', usecols=req_cols)
+
+    frames = [df0, df1, df2, df3, df4, df5, df7, df8, df9, df10, df11, df12, df13, df14, df15, df16, df17, df18, df19]
+
+    #concat data frames
+    df = pd.concat(frames,ignore_index=True)
+
+    # shuffle the DataFrame rows
+    df = df.sample(frac = fraction)
+
+    # assign alert column to y
+    y = df.pop('ALERT')
+
+    # join alert back to df
+    df = df.assign( ALERT = y) 
+
+    #Fill NaN with 0s
+    df = df.fillna(0)
+
+    #df.pop('PROTOCOL_MAP')
+        
+    print('---------------------------------------------------------------------------------')
+    print('Reducing Normal rows')
+    print('---------------------------------------------------------------------------------')
+    print('')
+
+
+    #filters
+
+    filtered_normal = df[df['ALERT'] == 'None']
+
+    #reduce
+
+    reduced_normal = filtered_normal.sample(frac=frac_normal)
+
+    #join
+
+    df = pd.concat([df[df['ALERT'] != 'None'], reduced_normal])
+
+    ''' ---------------------------------------------------------------'''
+
+
+
+    X = df
+    y = X['ALERT']
+
+    y,label = pd.factorize(y)
+    y = pd.DataFrame(y)
+    label = list(label)
+    print(label)
+    df ['ALERT'] = y 
+    X = X.drop(["ALERT"], axis=1)
+    print(label.index('None'))
+    # X[' Flow Duration'] = [label.index('BENIGN') if v > 10000 else label.index('Dos/Ddos')  for v in X[' Flow Duration'].values]
+    X['FLOW_DURATION_MILLISECONDS'] = [0 if v > 10000 else 1  for v in X['FLOW_DURATION_MILLISECONDS'].values]
+
+
+
+    y = np.array([POSITIVE_OUTCOME if p == 0 else NEGATIVE_OUTCOME for p in y.values])
+    # y = np.array([POSITIVE_OUTCOME if p == 1 else NEGATIVE_OUTCOME for p in y.values])
+
+    cols = req_cols
     return X, y, cols
