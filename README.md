@@ -142,8 +142,7 @@ FIGURE 12: Robustness sensitivity for SHAP for all three network intrusion datas
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/1e5cf443-dd3f-4615-bb28-5286a13ec86e)
 
-How use Robustness program:
-Inside the Robustness folder, firts run the code: threshold_CIC.py to generate a csv file. Then run analyze_threshold_CIC_LIME.py to generate the Robustness Sensitivity graph. and run the program RF_SHAP_CIC_bar.ipynb to generate the robustness bar graphs. 
+
 
 Main Insights:   
 
@@ -153,13 +152,14 @@ the other hand, LIME performs worse than SHAP for
 CICIDS-2017 and RoEduNet-SIMARGL2021 datasets with
 fewer occurrences of the biased feature. Overall, SHAP
 technique performed better than LIME for two of the three
-datasets selected for this study in this experiment.
+datasets selected for this study in this experiment.  See Figures 8, 9, and 10.
+
 
 -Overall, although LIME and SHAP are both
 vulnerable to such attacks starting at a certain threshold, our
 experiments show that LIME is slightly more robust since
 its initial threshold towards attacks of this kind being higher
-compared to SHAP.
+compared to SHAP. See Figures 11 and 12.
 
 4. Efficiency
 
@@ -300,12 +300,15 @@ A heatmap analysis that shows the common top features across different AI models
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/5b71e08c-4962-4f83-8f10-7fe648c4f4c6)
 
 
-Datasets:
+### Datasets:
 
 Download one of the datasets. RoEduNet-SIMARGL2021: https://www.kaggle.com/datasets/7f91274fa3074d53e983f6eb7a7b24ad1dca136ca967ad0ebe48955e246c24ee CICIDS-2017: https://www.kaggle.com/datasets/cicdataset/cicids2017
 NSL-KDD: https://www.unb.ca/cic/datasets/nsl.html
 
-References:
+### How use Robustness program:
+Inside the Robustness folder, firts run the code: threshold_CIC.py to generate a csv file. Then run analyze_threshold_CIC_LIME.py to generate the Robustness Sensitivity graph. and run the program RF_SHAP_CIC_bar.ipynb to generate the robustness bar graphs. 
+
+### References:
 
 Robustness based on: https://github.com/dylan-slack/Fooling-LIME-SHAP/
 
