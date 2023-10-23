@@ -302,10 +302,28 @@ models, indicating a nuanced performance that depends
 heavily on the specific combination of the dataset, AI model,
 and XAI explanation method.
 
-7. A heatmap analysis that shows the common top features across different AI models and the two XAI methods
-(SHAP and LIME) for all of the three studied datasets. The number of matched features are shown for each pair.
+7. Common Features across XAI Methods: We provide a
+heatmap that shows the common top features across different
+AI models and XAI methods for all of the three datasets.
+Figure 17 shows such heatmaps for all three datasets. It
+shows that there is very little overlap between the top features found by SHAP and LIME. Perturbing these features, we
+found that the top features of SHAP cause a discernible
+class transition, highlighting their importance. On the other
+hand, perturbing LIME’s top features does not result in a
+noteworthy variation, suggesting that LIME may be less
+significant in the classification context. This difference is
+further supported by the global completeness in Tables 13-14,
+which shows that higher shift in resulting intrusion class in
+response to perturbations in SHAP’s features than in LIME’s,
+indicating that SHAP is more reliable at identifying pertinent
+intrusion features.
+
+
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/5b71e08c-4962-4f83-8f10-7fe648c4f4c6)
+
+FIGURE 17: A heatmap analysis that shows the common top features across different AI models and the two XAI methods
+(SHAP and LIME) for all of the three studied datasets. The number of matched features are shown for each pair.
 
 
 ### Datasets:
