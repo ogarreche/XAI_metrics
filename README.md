@@ -174,13 +174,21 @@ security analysts, the expectation is to be able to
 generate accurate XAI explanations in real-time to detect
 intrusions in a timely manner.
 
-The efficiency (amount of time in hours) for generating SHAP and LIME explanations for different AI models and
+TABLE 11: The efficiency (amount of time in hours) for generating SHAP and LIME explanations for different AI models and
 different number of samples.
 
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/9eb345df-d07b-4860-88c0-13b0210ae9b4)
 
 
 Main Insights: 
+
+-Given these results, we have the following recommendations
+from computational efficiency perspective: (i) the best choice
+for SHAP is to pair it with LGBM, RF, or DNN for global
+explanations, (ii) the usage of SHAP is better than LIME
+for local explanations, and (iii) adapting LIME for global
+explanations is more efficient compared to SHAP. See Table 11.
+
 5. Completeness
 
 The completeness characteristic of an
@@ -302,7 +310,12 @@ A heatmap analysis that shows the common top features across different AI models
 
 ### Datasets:
 
-Download one of the datasets. RoEduNet-SIMARGL2021: https://www.kaggle.com/datasets/7f91274fa3074d53e983f6eb7a7b24ad1dca136ca967ad0ebe48955e246c24ee CICIDS-2017: https://www.kaggle.com/datasets/cicdataset/cicids2017
+Download one of the datasets. 
+
+RoEduNet-SIMARGL2021: https://www.kaggle.com/datasets/7f91274fa3074d53e983f6eb7a7b24ad1dca136ca967ad0ebe48955e246c24ee 
+
+CICIDS-2017: https://www.kaggle.com/datasets/cicdataset/cicids2017
+
 NSL-KDD: https://www.unb.ca/cic/datasets/nsl.html
 
 ### How use Robustness program:
