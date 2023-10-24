@@ -392,7 +392,7 @@ Efficiency:
   - Inside the CICIDS or SIMARGL or NSLKDD folder you will find programs for each model used in this paper. They output the time spent to generate the SHAP or LIME evaluation for  k samples. We can just set up in the program the k value and take note of the time spent.
 
 Heatmap: 
-
+  - To generate heatmaps, see the code [dataset]_heatmap.py located in each dataset folder. 
 ### References:
 
 Robustness based on: https://github.com/dylan-slack/Fooling-LIME-SHAP/
