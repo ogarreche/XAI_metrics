@@ -16,7 +16,7 @@ gamma=0.1
 
 
 # XAI Samples
-samples = 1000
+samples = 1# 1000
 
 
 output_file_name = "SVM_LIME_output.txt"
@@ -216,11 +216,11 @@ df = df.sample(frac = fraction)
 # df.pop('FLOW_DURATION_MILLISECONDS')
 # df.pop('MIN_IP_PKT_LEN')
 # df.pop('OUT_BYTES')
-df.pop('DST_TOS')
-df.pop('OUT_PKTS')
-df.pop('TOTAL_FLOWS_EXP')
-df.pop('TOTAL_BYTES_EXP')
-df.pop('TOTAL_PKTS_EXP')
+# df.pop('DST_TOS')
+# df.pop('OUT_PKTS')
+# df.pop('TOTAL_FLOWS_EXP')
+# df.pop('TOTAL_BYTES_EXP')
+# df.pop('TOTAL_PKTS_EXP')
 print('---------------------------------------------------------------------------------')
 print('Normalizing')
 print('---------------------------------------------------------------------------------')
@@ -357,202 +357,291 @@ print('MCC total: ', MCC)
 for i in range(0,len(TP)):
     Acc = ACC(TP[i],TN[i], FP[i], FN[i])
     print('Accuracy: ', label[i] ,' - ' , Acc)
-#----------------------------------------------------------------
+# #----------------------------------------------------------------
 model = CalibratedClassifierCV(clf)
 model.fit(X_train, y_train)
 ypred = model.predict_proba(X_test)
+# #----------------------------------------------------------------
+# classes_n = []
+# for i in range(len(label)): classes_n.append(i)
+# y_test_bin = label_binarize(y_test,classes = classes_n)
+# n_classes = y_test_bin.shape[1]
+# try:
+#     print('rocauc is ',roc_auc_score(y_test_bin,ypred, multi_class='ovr'))
+# except:
+#      print('rocauc is nan')
 #----------------------------------------------------------------
-classes_n = []
-for i in range(len(label)): classes_n.append(i)
-y_test_bin = label_binarize(y_test,classes = classes_n)
-n_classes = y_test_bin.shape[1]
+
+with open(output_file_name, "a") as f:print('Accuracy total: ', Acc, file = f)
+with open(output_file_name, "a") as f:print('Precision total: ', Precision , file = f)
+with open(output_file_name, "a") as f:print('Recall total: ', Recall,  file = f)
+with open(output_file_name, "a") as f:print(    'F1 total: ', F1  , file = f)
+with open(output_file_name, "a") as f:print(   'BACC total: ', BACC   , file = f)
+with open(output_file_name, "a") as f:print(    'MCC total: ', MCC     , file = f)
+
+
+
+#----------------AUCROC--------------------
+y = df.pop('ALERT')
+X = df
+y1, y2 = pd.factorize(y)
+
+# Replace multiclass with many y binary class
+y_0 = pd.DataFrame(y1)
+y_1 = pd.DataFrame(y1)
+y_2 = pd.DataFrame(y1)
+
+
+y_0 = y_0.replace(0, 0)
+y_0 = y_0.replace(1, 1)
+y_0 = y_0.replace(2, 1)
+
+
+y_1 = y_1.replace(0, 1)
+y_1 = y_1.replace(1, 0)
+y_1 = y_1.replace(2, 1)
+
+
+y_2 = y_2.replace(0, 1)
+y_2 = y_2.replace(1, 1)
+y_2 = y_2.replace(2, 0)
+
+
+df = df.assign(Label = y)
+
+#AUCROC - Train the model and get each auc roc
+aucroc =[]
+y_array = [y_0,y_1,y_2]
+for j in range(0,len(y_array)):
+    # print(j)
+    #------------------------------------------------------------------------------------------------------------
+    X_train,X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y_array[j], train_size=split)
+    
+
+    rbf_feature = RBFSampler(gamma=gamma, random_state=1)
+    X_features = rbf_feature.fit_transform(X_train)
+    clf = SGDClassifier(max_iter=max_iter,loss=loss)
+    clf.fit(X_features, y_train)
+    clf.score(X_features, y_train)
+
+
+    X_test_ = rbf_feature.fit_transform(X_test)
+    rbf_pred = clf.predict(X_test_)
+
+    y_pred = rbf_pred
+
+
+    y_scores = y_pred
+    y_true = y_test
+    
+    # Calculate AUC-ROC score
+    auc_roc_score= roc_auc_score(y_true, y_scores,  average='weighted')  # Use 'micro' or 'macro' for different averaging strategies
+    # print("AUC-ROC Score class:", auc_roc_score)
+    aucroc.append(auc_roc_score)
+    #-------------------------------------------------------------------------------------------------------    -----
+    # Calculate the average
+average = sum(aucroc) / len(aucroc)
+
+# Display the result
+with open(output_file_name, "a") as f:print("AUC ROC Average:", average, file = f)
+print("AUC ROC Average:", average)
+
+#End AUC ROC
+
+
+
+
+
 try:
-    print('rocauc is ',roc_auc_score(y_test_bin,ypred, multi_class='ovr'))
+    with open(output_file_name, "a") as f:print(   'AUC_ROC total: ', roc_auc_score(y_test_bin,ypred, multi_class='ovr') , file = f)
 except:
-     print('rocauc is nan')
-#----------------------------------------------------------------
+    print('rocauc is nan')
 
-# print('---------------------------------------------------------------------------------')
-# print('Generating LIME explanation')
-# print('---------------------------------------------------------------------------------')
-# print('')
-
+print('---------------------------------------------------------------------------------')
+print('Generating LIME explanation')
+print('---------------------------------------------------------------------------------')
+print('')
 
 
-# # test.pop ('Label')
-# print('------------------------------------------------------------------------------')
 
-# #START TIMER MODEL
-# start = time.time()
-# train =  X_train
-# test = X_test
-# test2 = test
-# test = test.to_numpy()
+# test.pop ('Label')
+print('------------------------------------------------------------------------------')
 
-# explainer = lime.lime_tabular.LimeTabularExplainer(train.to_numpy(), feature_names= list(train.columns.values) , class_names=label.values , discretize_continuous=True)
+#START TIMER MODEL
+start = time.time()
+train =  X_train
+test = X_test
+test2 = test
+test = test.to_numpy()
+
+explainer = lime.lime_tabular.LimeTabularExplainer(train.to_numpy(), feature_names= list(train.columns.values) , class_names=label.values , discretize_continuous=True)
 
 
-# #creating dict 
-# feat_list = req_cols[:-1]
-# # print(feat_list)
+#creating dict 
+feat_list = req_cols[:-1]
+# print(feat_list)
 
-# feat_dict = dict.fromkeys(feat_list, 0)
-# # print(feat_dict)
-# c = 0
+feat_dict = dict.fromkeys(feat_list, 0)
+# print(feat_dict)
+c = 0
 
-# num_columns = df.shape[1] - 1
-# feature_name = req_cols[:-1]
-# feature_name.sort()
-# # print('lista',feature_name)
-# feature_val = []
+num_columns = df.shape[1] - 1
+feature_name = req_cols[:-1]
+feature_name.sort()
+# print('lista',feature_name)
+feature_val = []
 
-# for i in range(0,num_columns): feature_val.append(0)
+for i in range(0,num_columns): feature_val.append(0)
 
-# for i in range(0,samples):
+for i in range(0,samples):
 
-# # i = sample
-#     # exp = explainer.explain_instance(test[i], rf.predict_proba)
+# i = sample
+    # exp = explainer.explain_instance(test[i], rf.predict_proba)
     
-#     exp = explainer.explain_instance(test[i], model.predict_proba, num_features=num_columns, top_labels=num_columns)
-#     # exp.show_in_notebook(show_table=True, show_all=True)
+    exp = explainer.explain_instance(test[i], model.predict_proba, num_features=num_columns, top_labels=num_columns)
+    # exp.show_in_notebook(show_table=True, show_all=True)
     
-#     #lime list to string
-#     lime_list = exp.as_list()
-#     lime_list.sort()
-#     # print(lime_list)
-#     for j in range (0,num_columns): feature_val[j]+= abs(lime_list[j][1])
-#     # print ('debug here',lime_list[1][1])
+    #lime list to string
+    lime_list = exp.as_list()
+    lime_list.sort()
+    # print(lime_list)
+    for j in range (0,num_columns): feature_val[j]+= abs(lime_list[j][1])
+    # print ('debug here',lime_list[1][1])
 
-#     # lime_str = ' '.join(str(x) for x in lime_list)
-#     # print(lime_str)
+    # lime_str = ' '.join(str(x) for x in lime_list)
+    # print(lime_str)
 
 
-#     #lime counting features frequency 
-#     # for i in feat_list:
-#     #     if i in lime_str:
-#     #         #update dict
-#     #         feat_dict[i] = feat_dict[i] + 1
+    #lime counting features frequency 
+    # for i in feat_list:
+    #     if i in lime_str:
+    #         #update dict
+    #         feat_dict[i] = feat_dict[i] + 1
     
-#     c = c + 1 
-#     print ('progress',100*(c/samples),'%')
+    c = c + 1 
+    print ('progress',100*(c/samples),'%')
 
-# # Define the number you want to divide by
-# divider = samples
+# Define the number you want to divide by
+divider = samples
 
-# # Use a list comprehension to divide all elements by the same number
-# feature_val = [x / divider for x in feature_val]
+# Use a list comprehension to divide all elements by the same number
+feature_val = [x / divider for x in feature_val]
 
-# # for item1, item2 in zip(feature_name, feature_val):
-# #     print(item1, item2)
-
-
-# # Use zip to combine the two lists, sort based on list1, and then unzip them
-# zipped_lists = list(zip(feature_name, feature_val))
-# zipped_lists.sort(key=lambda x: x[1],reverse=True)
-
-# # Convert the sorted result back into separate lists
-# sorted_list1, sorted_list2 = [list(x) for x in zip(*zipped_lists)]
-
-# # print(sorted_list1)
-# # print(sorted_list2)
-# print('----------------------------------------------------------------------------------------------------------------')
-
-# for item1, item2 in zip(sorted_list1, sorted_list2):
+# for item1, item2 in zip(feature_name, feature_val):
 #     print(item1, item2)
 
-# for k in sorted_list1:
-#   with open(output_file_name, "a") as f:print("df.pop('",k,"')", sep='', file = f)
 
-# print('---------------------------------------------------------------------------------')
+# Use zip to combine the two lists, sort based on list1, and then unzip them
+zipped_lists = list(zip(feature_name, feature_val))
+zipped_lists.sort(key=lambda x: x[1],reverse=True)
 
-# # # print(feat_dict)
-# # # Sort values in descending order
-# # for k,v in sorted(feat_dict.items(), key=lambda x: x[1], reverse=True):
-# #   print(k,v)
+# Convert the sorted result back into separate lists
+sorted_list1, sorted_list2 = [list(x) for x in zip(*zipped_lists)]
 
-# # for k,v in sorted(feat_dict.items(), key=lambda x: x[1], reverse=True):
-# #   print("df.pop('",k,"')", sep='')
+# print(sorted_list1)
+# print(sorted_list2)
+print('----------------------------------------------------------------------------------------------------------------')
 
-# print('---------------------------------------------------------------------------------')
+for item1, item2 in zip(sorted_list1, sorted_list2):
+    print(item1, item2)
 
+for k in sorted_list1:
+  with open(output_file_name, "a") as f:print("df.pop('",k,"')", sep='', file = f)
 
-# end = time.time()
-# with open(output_file_name, "a") as f:print('ELAPSE TIME LIME GLOBAL: ',(end - start)/60, 'min', file = f)
-# print('---------------------------------------------------------------------------------')
+with open(output_file_name, "a") as f:print("Trial_ =[", file = f)
+for k in sorted_list1:
+    with open(output_file_name, "a") as f:print("'",k,"',", sep='', file = f)
+with open(output_file_name, "a") as f:print("]", file = f)
+print('---------------------------------------------------------------------------------')
 
-# print('---------------------------------------------------------------------------------')
-# print('Generating Sparsity Graph')
-# print('---------------------------------------------------------------------------------')
-# print('')
-# # print(feature_importance)
+# # print(feat_dict)
+# # Sort values in descending order
+# for k,v in sorted(feat_dict.items(), key=lambda x: x[1], reverse=True):
+#   print(k,v)
 
-# # feature_importance_vals = 'feature_importance_vals'  # Replace with the name of the column you want to extract
-# feature_val = sorted_list2
+# for k,v in sorted(feat_dict.items(), key=lambda x: x[1], reverse=True):
+#   print("df.pop('",k,"')", sep='')
 
-# # col_name = 'col_name'  # Replace with the name of the column you want to extract
-# feature_name = sorted_list1
-
-# # Find the minimum and maximum values in the list
-# min_value = min(feature_val)
-# max_value = max(feature_val)
-
-# # Normalize the list to the range [0, 1]
-# normalized_list = [(x - min_value) / (max_value - min_value) for x in feature_val]
-
-# # print(feature_name,normalized_list,'\n')
-# # for item1, item2 in zip(feature_name, normalized_list):
-# #     print(item1, item2)
-
-# #calculating Sparsity
-
-# # Define the threshold
-# threshold = 1e-10
-
-# # Initialize a count variable to keep track of values below the threshold
-# count_below_threshold = 0
-
-# # Iterate through the list and count values below the threshold
-# for value in normalized_list:
-#     if value < threshold:
-#         count_below_threshold += 1
-
-# Sparsity = count_below_threshold/len(normalized_list)
-# Spar = []
-# print('Sparsity = ',Sparsity)
-# X_axis = []
-# #----------------------------------------------------------------------------
-# for i in range(0, 11):
-#     i/10
-#     threshold = i/10
-#     for value in normalized_list:
-#         if value < threshold:
-#             count_below_threshold += 1
-
-#     Sparsity = count_below_threshold/len(normalized_list)
-#     Spar.append(Sparsity)
-#     X_axis.append(i/10)
-#     count_below_threshold = 0
+print('---------------------------------------------------------------------------------')
 
 
-# #---------------------------------------------------------------------------
+end = time.time()
+with open(output_file_name, "a") as f:print('ELAPSE TIME LIME GLOBAL: ',(end - start)/60, 'min', file = f)
+print('---------------------------------------------------------------------------------')
 
-# with open(output_file_name, "a") as f:print('y_axis_SVM = ', Spar ,'', file = f)
+print('---------------------------------------------------------------------------------')
+print('Generating Sparsity Graph')
+print('---------------------------------------------------------------------------------')
+print('')
+# print(feature_importance)
 
-# with open(output_file_name, "a") as f:print('x_axis_RF = ', X_axis ,'', file = f)
+# feature_importance_vals = 'feature_importance_vals'  # Replace with the name of the column you want to extract
+feature_val = sorted_list2
 
-# plt.clf()
+# col_name = 'col_name'  # Replace with the name of the column you want to extract
+feature_name = sorted_list1
 
-# # Create a plot
-# plt.plot(X_axis, Spar, marker='o', linestyle='-')
+# Find the minimum and maximum values in the list
+min_value = min(feature_val)
+max_value = max(feature_val)
 
-# # Set labels for the axes
-# plt.xlabel('X-Axis')
-# plt.ylabel('Y-Axis')
+# Normalize the list to the range [0, 1]
+normalized_list = [(x - min_value) / (max_value - min_value) for x in feature_val]
 
-# # Set the title of the plot
-# plt.title('Values vs. X-Axis')
+# print(feature_name,normalized_list,'\n')
+# for item1, item2 in zip(feature_name, normalized_list):
+#     print(item1, item2)
 
-# # Show the plot
-# # plt.show()
-# plt.savefig('sparsity_RF_LIME.png')
-# plt.clf()
+#calculating Sparsity
+
+# Define the threshold
+threshold = 1e-10
+
+# Initialize a count variable to keep track of values below the threshold
+count_below_threshold = 0
+
+# Iterate through the list and count values below the threshold
+for value in normalized_list:
+    if value < threshold:
+        count_below_threshold += 1
+
+Sparsity = count_below_threshold/len(normalized_list)
+Spar = []
+print('Sparsity = ',Sparsity)
+X_axis = []
+#----------------------------------------------------------------------------
+for i in range(0, 11):
+    i/10
+    threshold = i/10
+    for value in normalized_list:
+        if value < threshold:
+            count_below_threshold += 1
+
+    Sparsity = count_below_threshold/len(normalized_list)
+    Spar.append(Sparsity)
+    X_axis.append(i/10)
+    count_below_threshold = 0
+
+
+#---------------------------------------------------------------------------
+
+with open(output_file_name, "a") as f:print('y_axis_SVM = ', Spar ,'', file = f)
+
+with open(output_file_name, "a") as f:print('x_axis_RF = ', X_axis ,'', file = f)
+
+plt.clf()
+
+# Create a plot
+plt.plot(X_axis, Spar, marker='o', linestyle='-')
+
+# Set labels for the axes
+plt.xlabel('X-Axis')
+plt.ylabel('Y-Axis')
+
+# Set the title of the plot
+plt.title('Values vs. X-Axis')
+
+# Show the plot
+# plt.show()
+plt.savefig('sparsity_RF_LIME.png')
+plt.clf()
