@@ -15,7 +15,7 @@ gamma=0.1
 
 
 # XAI Samples
-samples = 200
+samples = 2500 #200
 
 
 # Specify the name of the output text file
@@ -435,6 +435,169 @@ for i in range(0,len(TP)):
 print('---------------------------------------------------------------------------------')
 
 
+
+
+
+
+#----------------AUCROC--------------------
+y = df.pop('Label')
+X = df
+y1, y2 = pd.factorize(y)
+
+y_0 = pd.DataFrame(y1)
+y_1 = pd.DataFrame(y1)
+y_2 = pd.DataFrame(y1)
+y_3 = pd.DataFrame(y1)
+y_4 = pd.DataFrame(y1)
+y_5 = pd.DataFrame(y1)
+y_6 = pd.DataFrame(y1)
+
+y_0 = y_0.replace(0, 0)
+y_0 = y_0.replace(1, 1)
+y_0 = y_0.replace(2, 1)
+y_0 = y_0.replace(3, 1)
+y_0 = y_0.replace(4, 1)
+y_0 = y_0.replace(5, 1)
+y_0 = y_0.replace(6, 1)
+
+y_1 = y_1.replace(0, 1)
+y_1 = y_1.replace(1, 0)
+y_1 = y_1.replace(2, 1)
+y_1 = y_1.replace(3, 1)
+y_1 = y_1.replace(4, 1)
+y_1 = y_1.replace(5, 1)
+y_1 = y_1.replace(6, 1)
+
+y_2 = y_2.replace(0, 1)
+y_2 = y_2.replace(1, 1)
+y_2 = y_2.replace(2, 0)
+y_2 = y_2.replace(3, 1)
+y_2 = y_2.replace(4, 1)
+y_2 = y_2.replace(5, 1)
+y_2 = y_2.replace(6, 1)
+
+y_3 = y_3.replace(0, 1)
+y_3 = y_3.replace(1, 1)
+y_3 = y_3.replace(2, 1)
+y_3 = y_3.replace(3, 0)
+y_3 = y_3.replace(4, 1)
+y_3 = y_3.replace(5, 1)
+y_3 = y_3.replace(6, 1)
+
+y_4 = y_4.replace(0, 1)
+y_4 = y_4.replace(1, 1)
+y_4 = y_4.replace(2, 1)
+y_4 = y_4.replace(3, 1)
+y_4 = y_4.replace(4, 0)
+y_4 = y_4.replace(5, 1)
+y_4 = y_4.replace(6, 1)
+
+y_5 = y_5.replace(0, 1)
+y_5 = y_5.replace(1, 1)
+y_5 = y_5.replace(2, 1)
+y_5 = y_5.replace(3, 1)
+y_5 = y_5.replace(4, 1)
+y_5 = y_5.replace(5, 0)
+y_5 = y_5.replace(6, 1)
+
+y_6 = y_6.replace(0, 1)
+y_6 = y_6.replace(1, 1)
+y_6 = y_6.replace(2, 1)
+y_6 = y_6.replace(3, 1)
+y_6 = y_6.replace(4, 1)
+y_6 = y_6.replace(5, 1)
+y_6 = y_6.replace(6, 0)
+
+df = df.assign(Label = y)
+
+#AUC ROC
+#---------------------------------------------------------------------
+
+
+
+#---------------------------------------------------------------------
+
+#Train
+# Separate Training and Testing db
+print('---------------------------------------------------------------------------------')
+print('Separating Training and Testing db')
+print('---------------------------------------------------------------------------------')
+print('')
+
+#AUCROC
+#------------------------------------------------------------------------------------------------------------
+X_train,X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y_0, train_size=split)
+
+print('---------------------------------------------------------------------------------')
+print('Defining the SVM model')
+print('---------------------------------------------------------------------------------')
+print('')
+
+rbf_feature = RBFSampler(gamma=gamma, random_state=1)
+X_features = rbf_feature.fit_transform(X_train)
+clf = SGDClassifier(max_iter=max_iter,loss=loss)
+clf.fit(X_features, y_train)
+clf.score(X_features, y_train)
+
+
+X_test_ = rbf_feature.fit_transform(X_test)
+rbf_pred = clf.predict(X_test_)
+
+y_pred = rbf_pred
+
+
+y_scores = y_pred
+y_true = y_test
+# Calculate AUC-ROC score
+auc_roc_score_0 = roc_auc_score(y_true, y_scores,  average='weighted')  # Use 'micro' or 'macro' for different averaging strategies
+print("AUC-ROC Score class 0:", auc_roc_score_0)
+#------------------------------------------------------------------------------------------------------------
+
+#AUCROC
+aucroc =[]
+y_array = [y_0,y_1,y_2,y_3,y_4,y_5,y_6]
+for j in range(0,7):
+    # print(j)
+    #------------------------------------------------------------------------------------------------------------
+    X_train,X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y_array[j], train_size=split)
+    
+
+    rbf_feature = RBFSampler(gamma=gamma, random_state=1)
+    X_features = rbf_feature.fit_transform(X_train)
+    clf = SGDClassifier(max_iter=max_iter,loss=loss)
+    clf.fit(X_features, y_train)
+    clf.score(X_features, y_train)
+
+
+    X_test_ = rbf_feature.fit_transform(X_test)
+    rbf_pred = clf.predict(X_test_)
+
+    y_pred = rbf_pred
+
+
+    y_scores = y_pred
+    y_true = y_test
+    
+    # Calculate AUC-ROC score
+    auc_roc_score= roc_auc_score(y_true, y_scores,  average='weighted')  # Use 'micro' or 'macro' for different averaging strategies
+    # print("AUC-ROC Score class:", auc_roc_score)
+    aucroc.append(auc_roc_score)
+    #-------------------------------------------------------------------------------------------------------    -----
+    # Calculate the average
+average = sum(aucroc) / len(aucroc)
+
+# Display the result
+with open(output_file_name, "a") as f:print("AUC ROC Average:", average, file = f)
+print("AUC ROC Average:", average)
+
+#End AUC ROC
+
+
+
+#-------------------------------------------
+
+
+
 #----------------------------------------------------------------
 model = CalibratedClassifierCV(clf)
 model.fit(X_train, y_train)
@@ -450,6 +613,8 @@ try:
 except:
     print('rocauc is nan')
 
+#START TIMER MODEL
+start = time.time()
 
 print('---------------------------------------------------------------------------------')
 print('Generating SHAP explanation')
@@ -466,11 +631,11 @@ shap_values = explainer.shap_values(test[start_index:end_index])
 
 print('labels: ',label)
 y_labels = label
-# shap.summary_plot(shap_values = shap_values,
-#                   features = test[start_index:end_index],
-#                  class_names=[y_labels[0],y_labels[1],y_labels[2],y_labels[3],y_labels[4],y_labels[5],y_labels[6]],show=False)
+shap.summary_plot(shap_values = shap_values,
+                  features = test[start_index:end_index],
+                 class_names=[y_labels[0],y_labels[1],y_labels[2],y_labels[3],y_labels[4],y_labels[5],y_labels[6]],show=False)
 
-# plt.savefig('SVM_Shap_Summary_global.png')
+plt.savefig('SVM_SHAP_CIC_Summary.png')
 plt.clf()
 
 
@@ -480,6 +645,10 @@ feature_importance.sort_values(by=['feature_importance_vals'], ascending=False,i
 feature_importance.head()
 print(feature_importance.to_string())
 
+
+end = time.time()
+with open(output_file_name, "a") as f:print('ELAPSE TIME LIME GLOBAL: ',(end - start)/60, 'min',file = f)
+print('---------------------------------------------------------------------------------')
 
 
 print('---------------------------------------------------------------------------------')

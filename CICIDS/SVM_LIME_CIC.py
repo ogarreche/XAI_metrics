@@ -157,8 +157,11 @@ print('-------------------------------------------------------------------------
 '''
 all features
 '''
-
+# all features
 req_cols = [' Destination Port',' Flow Duration',' Total Fwd Packets',' Total Backward Packets','Total Length of Fwd Packets',' Total Length of Bwd Packets',' Fwd Packet Length Max',' Fwd Packet Length Min',' Fwd Packet Length Mean',' Fwd Packet Length Std','Bwd Packet Length Max',' Bwd Packet Length Min',' Bwd Packet Length Mean',' Bwd Packet Length Std','Flow Bytes/s',' Flow Packets/s',' Flow IAT Mean',' Flow IAT Std',' Flow IAT Max',' Flow IAT Min','Fwd IAT Total',' Fwd IAT Mean',' Fwd IAT Std',' Fwd IAT Max',' Fwd IAT Min','Bwd IAT Total',' Bwd IAT Mean',' Bwd IAT Std',' Bwd IAT Max',' Bwd IAT Min','Fwd PSH Flags',' Bwd PSH Flags',' Fwd URG Flags',' Bwd URG Flags',' Fwd Header Length',' Bwd Header Length','Fwd Packets/s',' Bwd Packets/s',' Min Packet Length',' Max Packet Length',' Packet Length Mean',' Packet Length Std',' Packet Length Variance','FIN Flag Count',' SYN Flag Count',' RST Flag Count',' PSH Flag Count',' ACK Flag Count',' URG Flag Count',' CWE Flag Count',' ECE Flag Count',' Down/Up Ratio',' Average Packet Size',' Avg Fwd Segment Size',' Avg Bwd Segment Size',' Fwd Header Length','Fwd Avg Bytes/Bulk',' Fwd Avg Packets/Bulk',' Fwd Avg Bulk Rate',' Bwd Avg Bytes/Bulk',' Bwd Avg Packets/Bulk','Bwd Avg Bulk Rate','Subflow Fwd Packets',' Subflow Fwd Bytes',' Subflow Bwd Packets',' Subflow Bwd Bytes','Init_Win_bytes_forward',' Init_Win_bytes_backward',' act_data_pkt_fwd',' min_seg_size_forward','Active Mean',' Active Std',' Active Max',' Active Min','Idle Mean',' Idle Std',' Idle Max',' Idle Min',' Label']
+
+#8 features
+req_cols=[' Packet Length Std',' Total Length of Bwd Packets',' Subflow Bwd Bytes',' Destination Port',' Packet Length Variance',' Bwd Packet Length Mean',' Avg Bwd Segment Size',' Init_Win_bytes_backward',' Label']
 
 print('---------------------------------------------------------------------------------')
 print('Loading Databases')
@@ -426,6 +429,137 @@ print('BACC total: ', BACC)
 MCC = MCC(TP_total,TN_total, FP_total, FN_total)
 print('MCC total: ', MCC)
 
+
+with open(output_file_name, "a") as f:print('Accuracy total: ', Acc, file = f)
+with open(output_file_name, "a") as f:print('Precision total: ', Precision , file = f)
+with open(output_file_name, "a") as f:print('Recall total: ', Recall,  file = f)
+with open(output_file_name, "a") as f:print(    'F1 total: ', F1  , file = f)
+with open(output_file_name, "a") as f:print(   'BACC total: ', BACC   , file = f)
+with open(output_file_name, "a") as f:print(    'MCC total: ', MCC     , file = f)
+
+
+
+#----------------AUCROC--------------------
+y = df.pop('Label')
+X = df
+
+
+# Replace multiclass with many y binary class
+y1, y2 = pd.factorize(y)
+
+y_0 = pd.DataFrame(y1)
+y_1 = pd.DataFrame(y1)
+y_2 = pd.DataFrame(y1)
+y_3 = pd.DataFrame(y1)
+y_4 = pd.DataFrame(y1)
+y_5 = pd.DataFrame(y1)
+y_6 = pd.DataFrame(y1)
+
+# y_0 = y_0.replace(0, 0)
+# y_0 = y_0.replace(1, 1)
+y_0 = y_0.replace(2, 1)
+y_0 = y_0.replace(3, 1)
+y_0 = y_0.replace(4, 1)
+y_0 = y_0.replace(5, 1)
+y_0 = y_0.replace(6, 1)
+
+
+
+y_1 = y_1.replace(1, 9)
+
+y_1 = y_1.replace(0, 1)
+y_1 = y_1.replace(9, 0)
+y_1 = y_1.replace(2, 1)
+y_1 = y_1.replace(3, 1)
+y_1 = y_1.replace(4, 1)
+y_1 = y_1.replace(5, 1)
+y_1 = y_1.replace(6, 1)
+
+y_2 = y_2.replace(0, 1)
+# y_2 = y_2.replace(1, 1)
+y_2 = y_2.replace(2, 0)
+y_2 = y_2.replace(3, 1)
+y_2 = y_2.replace(4, 1)
+y_2 = y_2.replace(5, 1)
+y_2 = y_2.replace(6, 1)
+
+y_3 = y_3.replace(0, 1)
+# y_3 = y_3.replace(1, 1)
+y_3 = y_3.replace(2, 1)
+y_3 = y_3.replace(3, 0)
+y_3 = y_3.replace(4, 1)
+y_3 = y_3.replace(5, 1)
+y_3 = y_3.replace(6, 1)
+
+y_4 = y_4.replace(0, 1)
+# y_4 = y_4.replace(1, 1)
+y_4 = y_4.replace(2, 1)
+y_4 = y_4.replace(3, 1)
+y_4 = y_4.replace(4, 0)
+y_4 = y_4.replace(5, 1)
+y_4 = y_4.replace(6, 1)
+
+y_5 = y_5.replace(0, 1)
+# y_5 = y_5.replace(1, 1)
+y_5 = y_5.replace(2, 1)
+y_5 = y_5.replace(3, 1)
+y_5 = y_5.replace(4, 1)
+y_5 = y_5.replace(5, 0)
+y_5 = y_5.replace(6, 1)
+
+y_6 = y_6.replace(0, 1)
+# y_6 = y_6.replace(1, 1)
+y_6 = y_6.replace(2, 1)
+y_6 = y_6.replace(3, 1)
+y_6 = y_6.replace(4, 1)
+y_6 = y_6.replace(5, 1)
+y_6 = y_6.replace(6, 0)
+
+df = df.assign(Label = y)
+
+
+#AUCROC - Train the model and get each auc roc
+aucroc =[]
+y_array = [y_0,y_1,y_2,y_3,y_4,y_5,y_6]
+for j in range(0,len(y_array)):
+    # print(j)
+    #------------------------------------------------------------------------------------------------------------
+    X_train,X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y_array[j], train_size=split)
+    
+
+    rbf_feature = RBFSampler(gamma=gamma, random_state=1)
+    X_features = rbf_feature.fit_transform(X_train)
+    clf = SGDClassifier(max_iter=max_iter,loss=loss)
+    clf.fit(X_features, y_train)
+    clf.score(X_features, y_train)
+
+
+    X_test_ = rbf_feature.fit_transform(X_test)
+    rbf_pred = clf.predict(X_test_)
+
+    y_pred = rbf_pred
+
+
+    y_scores = y_pred
+    y_true = y_test
+    
+    # Calculate AUC-ROC score
+    auc_roc_score= roc_auc_score(y_true, y_scores,  average='weighted')  # Use 'micro' or 'macro' for different averaging strategies
+    # print("AUC-ROC Score class:", auc_roc_score)
+    aucroc.append(auc_roc_score)
+    #-------------------------------------------------------------------------------------------------------    -----
+    # Calculate the average
+average = sum(aucroc) / len(aucroc)
+
+# Display the result
+with open(output_file_name, "a") as f:print("AUC ROC Average:", average, file = f)
+print("AUC ROC Average:", average)
+
+#End AUC ROC
+
+
+
+
 #----------------------------------------------------------------
 for i in range(0,len(TP)):
     Acc = ACC(TP[i],TN[i], FP[i], FN[i])
@@ -445,6 +579,8 @@ y_test_bin = label_binarize(y_test,classes = classes_n)
 n_classes = y_test_bin.shape[1]
 try:
     print('rocauc is ',roc_auc_score(y_test_bin, ypred, multi_class='ovr'))
+    
+    # with open(output_file_name, "a") as f:print(   'AUC_ROC total: ',roc_auc_score(y_test_bin, ypred, multi_class='ovr')  , file = f)
 except:
     print('rocauc is nan')
 

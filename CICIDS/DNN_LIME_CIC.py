@@ -2,7 +2,7 @@
 #               Parameter Setting                #
 ###################################################
 
-fraction= 0.5 # how much of that database you want to use
+fraction= .5 # how much of that database you want to use
 frac_normal = .2 #how much of the normal classification you want to reduce
 split = 0.70 # how you want to split the train/test data (this is percentage fro train)
 
@@ -18,7 +18,7 @@ batch_size=2*256
 
 
 # XAI Samples
-samples = 300
+samples = 1 #300
 
 # Specify the name of the output text file
 output_file_name = "DNN_LIME_CIC_output.txt"
@@ -517,12 +517,191 @@ BACC = BACC(TP_total,TN_total, FP_total, FN_total)
 MCC = MCC(TP_total,TN_total, FP_total, FN_total)
 print('---------------------------------------------------------------------------------')
 
-with open(output_file_name, "a") as f: print('Accuracy total: ', Acc, file = f)
-print('Precision total: ', Precision )
-print('Recall total: ', Recall )
-print('F1 total: ', F1 )
-print('BACC total: ', BACC)
-print('MCC total: ', MCC)
+with open(output_file_name, "a") as f:print('Accuracy total: ', Acc, file = f)
+with open(output_file_name, "a") as f:print('Precision total: ', Precision , file = f)
+with open(output_file_name, "a") as f:print('Recall total: ', Recall,  file = f)
+with open(output_file_name, "a") as f:print(    'F1 total: ', F1  , file = f)
+with open(output_file_name, "a") as f:print(   'BACC total: ', BACC   , file = f)
+with open(output_file_name, "a") as f:print(    'MCC total: ', MCC     , file = f)
+
+
+#----------------AUCROC--------------------
+y = df.pop('Label')
+X = df
+y1, y2 = pd.factorize(y)
+
+y_0 = pd.DataFrame(y1)
+y_1 = pd.DataFrame(y1)
+y_2 = pd.DataFrame(y1)
+y_3 = pd.DataFrame(y1)
+y_4 = pd.DataFrame(y1)
+y_5 = pd.DataFrame(y1)
+y_6 = pd.DataFrame(y1)
+
+y_0 = y_0.replace(0, 0)
+y_0 = y_0.replace(1, 1)
+y_0 = y_0.replace(2, 1)
+y_0 = y_0.replace(3, 1)
+y_0 = y_0.replace(4, 1)
+y_0 = y_0.replace(5, 1)
+y_0 = y_0.replace(6, 1)
+
+y_1 = y_1.replace(0, 1)
+y_1 = y_1.replace(1, 0)
+y_1 = y_1.replace(2, 1)
+y_1 = y_1.replace(3, 1)
+y_1 = y_1.replace(4, 1)
+y_1 = y_1.replace(5, 1)
+y_1 = y_1.replace(6, 1)
+
+y_2 = y_2.replace(0, 1)
+y_2 = y_2.replace(1, 1)
+y_2 = y_2.replace(2, 0)
+y_2 = y_2.replace(3, 1)
+y_2 = y_2.replace(4, 1)
+y_2 = y_2.replace(5, 1)
+y_2 = y_2.replace(6, 1)
+
+y_3 = y_3.replace(0, 1)
+y_3 = y_3.replace(1, 1)
+y_3 = y_3.replace(2, 1)
+y_3 = y_3.replace(3, 0)
+y_3 = y_3.replace(4, 1)
+y_3 = y_3.replace(5, 1)
+y_3 = y_3.replace(6, 1)
+
+y_4 = y_4.replace(0, 1)
+y_4 = y_4.replace(1, 1)
+y_4 = y_4.replace(2, 1)
+y_4 = y_4.replace(3, 1)
+y_4 = y_4.replace(4, 0)
+y_4 = y_4.replace(5, 1)
+y_4 = y_4.replace(6, 1)
+
+y_5 = y_5.replace(0, 1)
+y_5 = y_5.replace(1, 1)
+y_5 = y_5.replace(2, 1)
+y_5 = y_5.replace(3, 1)
+y_5 = y_5.replace(4, 1)
+y_5 = y_5.replace(5, 0)
+y_5 = y_5.replace(6, 1)
+
+y_6 = y_6.replace(0, 1)
+y_6 = y_6.replace(1, 1)
+y_6 = y_6.replace(2, 1)
+y_6 = y_6.replace(3, 1)
+y_6 = y_6.replace(4, 1)
+y_6 = y_6.replace(5, 1)
+y_6 = y_6.replace(6, 0)
+
+df = df.assign(Label = y)
+
+#AUC ROC
+#---------------------------------------------------------------------
+# Defining the DNN model
+
+print('---------------------------------------------------------------------------------')
+print('Defining the DNN model')
+print('---------------------------------------------------------------------------------')
+print('')
+
+
+num_columns = X_train.shape[1]
+
+dnn = tf.keras.Sequential()
+
+# Input layer
+dnn.add(tf.keras.Input(shape=(num_columns,)))
+
+# Dense layers with dropout
+dnn.add(tf.keras.layers.Dense(nodes))
+dnn.add(tf.keras.layers.Dropout(dropout_rate))
+
+dnn.add(tf.keras.layers.Dense(nodes))
+dnn.add(tf.keras.layers.Dropout(dropout_rate))
+
+dnn.add(tf.keras.layers.Dense(nodes))
+dnn.add(tf.keras.layers.Dropout(dropout_rate))
+
+dnn.add(tf.keras.layers.Dense(nodes))
+dnn.add(tf.keras.layers.Dropout(dropout_rate))
+
+dnn.add(tf.keras.layers.Dense(nodes))
+dnn.add(tf.keras.layers.Dropout(dropout_rate))
+
+# Output layer
+# dnn.add(tf.keras.layers.Dense(2))
+
+dnn.add(tf.keras.layers.Dense(1, activation='sigmoid'))
+
+# dnn.compile(optimizer='adam', loss='binary cross-entropy')
+dnn.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+
+dnn.summary()
+
+#---------------------------------------------------------------------
+
+#Train
+# Separate Training and Testing db
+print('---------------------------------------------------------------------------------')
+print('Separating Training and Testing db')
+print('---------------------------------------------------------------------------------')
+print('')
+
+#AUCROC
+#------------------------------------------------------------------------------------------------------------
+X_train,X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y_0, train_size=split)
+dnn.fit(X_train, y_train, epochs=epochs, batch_size=batch_size)
+y_pred = dnn.predict(X_test)
+#print(y_pred)
+ynew = np.argmax(y_pred,axis = 1)
+y_scores = y_pred
+y_true = y_test
+# Calculate AUC-ROC score
+auc_roc_score_0 = roc_auc_score(y_true, y_scores,  average='weighted')  # Use 'micro' or 'macro' for different averaging strategies
+print("AUC-ROC Score class 0:", auc_roc_score_0)
+#------------------------------------------------------------------------------------------------------------
+
+#AUCROC
+aucroc =[]
+y_array = [y_0,y_1,y_2,y_3,y_4,y_5,y_6]
+for j in range(0,7):
+    # print(j)
+    #------------------------------------------------------------------------------------------------------------
+    X_train,X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y_array[j], train_size=split)
+    dnn.fit(X_train, y_train, epochs=epochs, batch_size=batch_size)
+    y_pred = dnn.predict(X_test)
+    #print(y_pred)
+    ynew = np.argmax(y_pred,axis = 1)
+    y_scores = y_pred
+    y_true = y_test
+    # Calculate AUC-ROC score
+    auc_roc_score= roc_auc_score(y_true, y_scores,  average='weighted')  # Use 'micro' or 'macro' for different averaging strategies
+    # print("AUC-ROC Score class:", auc_roc_score)
+    aucroc.append(auc_roc_score)
+    #-------------------------------------------------------------------------------------------------------    -----
+    # Calculate the average
+average = sum(aucroc) / len(aucroc)
+
+# Display the result
+with open(output_file_name, "a") as f:print("AUC ROC Average:", average, file = f)
+print("AUC ROC Average:", average)
+
+#End AUC ROC
+
+
+
+#-------------------------------------------
+
+
+
+
+
+# print('Precision total: ', Precision )
+# print('Recall total: ', Recall )
+# print('F1 total: ', F1 )
+# print('BACC total: ', BACC)
+# print('MCC total: ', MCC)
 for i in range(0,len(TP)):
    # Acc_2 = ACC_2(TP[i],FN[i])
     Acc = ACC(TP[i],TN[i], FP[i], FN[i])
@@ -530,11 +709,12 @@ for i in range(0,len(TP)):
 print('---------------------------------------------------------------------------------')
     
 
-#---------------------------------------------------------------------
-y_test_bin = label_binarize(y_test,classes = [0,1,2,3,4,5,6])
-n_classes = y_test_bin.shape[1]
-print('AUC_ROC total: ',AUC_ROC(y_test_bin,y_pred))
-print('---------------------------------------------------------------------------------')
+# #---------------------------------------------------------------------
+# y_test_bin = label_binarize(y_test,classes = [0,1,2,3,4,5,6])
+# n_classes = y_test_bin.shape[1]
+# # print('AUC_ROC total: ',AUC_ROC(y_test_bin,y_pred))
+# with open(output_file_name, "a") as f:print(   'AUC_ROC total: ', AUC_ROC(y_test_bin,y_pred)  , file = f)
+# print('---------------------------------------------------------------------------------')
 
 
 
