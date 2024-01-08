@@ -356,7 +356,7 @@ our three datasets. Such a table shows that CNN achieves high performance for CI
 RoEduNet-SIMARGL2021, while it has lower performance for NSL-KDD dataset. Note that Table
 11 shows all performance metrics.
 
-![image](https://github.com/ogarreche/XAI_metrics/blob/main/CNN_graph_DA.png)
+![image](https://github.com/ogarreche/XAI_metrics/blob/main/CNN_DA.png)
 
 Figure 18: Descriptive Accuracy using the CNN model
 for the CICIDS-2017 dataset. Note that the plot indicates
@@ -365,7 +365,7 @@ influential because there is no significant drop in accuracy
 for both XAI techniques.
 
 
-![image](https://github.com/ogarreche/XAI_metrics/blob/main/CNN_SPAR_CIC.png)
+![image](https://github.com/ogarreche/XAI_metrics/blob/main/CNN_SPAR.png)
 
 FIGURE 19: Sparsity metric using the CNN model for the
 CICIDS-2017 dataset. Note that the SHAP XAI method
@@ -387,6 +387,9 @@ roughly 30 times faster than SHAP in the same conditions analyzed. Unfortunately
 derive the Stability experiment for SHAP due to its memory complexity issue. Nonetheless, LIME
 performed 54.54% for Stability.
 
+9. Statistical Analysis:
+
+
 
 Table 10: This table shows the pairwise statistical test results between every pair of AI models by Wilcoxon signed rank test.
 Statistically better method (p < 0.05) shown in bold (both marked bold if there is significance and the median of the accuracies
@@ -394,7 +397,28 @@ are the same. Only one is marked bold if there is significance and one model has
 testbed is shown. In the middle, the RoEduNet-SIMARGL2021 testbed is shown. On the right, the NSL-KDD testbed is shown.
 For all testbeds, our method is statistically sound.
 
+![image](https://github.com/ogarreche/XAI_metrics/blob/main/wilcoxon.png)
 
+Main Insights:
+
+Considering the three datasets, we observe
+that most pair models reject the null hypothesis (p < 0.05).
+Therefore, there is evidence that one model performs better
+than the other in most cases. Thus, we can separate the tests
+into two groups: The group with statistical significance (i.e.,
+p < 0.05). And the group that does not have statistical
+significance (p > 0.05). We can further divide the first
+group into two subgroups by analyzing the medians of their
+array of accuracy scores of the estimator for each run of the
+cross-validation method. The first subgroup, indeed, has a
+model that is performing better (i.e., one model has a higher
+median than the other one). For this case, we highlighted
+the best model in bold in Table 17. However, for the second
+subgroup (i.e., both models display the same median), we
+cannot know which is better, but only that they are statistically
+different enough due to the evidence shown by the Wilcoxon
+test. In this case, we highlighted both models in bold in
+Table 17.
 
 ### Datasets:
 
