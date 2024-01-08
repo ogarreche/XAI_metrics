@@ -359,7 +359,7 @@ RoEduNet-SIMARGL2021, while it has lower performance for NSL-KDD dataset. Note t
 11 shows all performance metrics.
 
 
-![image]([https://github.com/ogarreche/XAI_metrics/assets/55901425/ea663c33-657b-42ee-a865-99fac4a2535d](https://github.com/ogarreche/XAI_metrics/blob/main/CNN_graph_DA.png))
+![image](https://github.com/ogarreche/XAI_metrics/blob/main/CNN_graph_DA.png)
 
 Main Insights:
 
