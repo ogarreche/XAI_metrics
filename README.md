@@ -400,6 +400,7 @@ NSL-KDD: https://www.unb.ca/cic/datasets/nsl.html
 ### How to use the programs:
 
 Inside the CICIDS or SIMARGL or NSLKDD folder you will find programs for each model used in this paper. Each one of these programs outputs:
+***(Note: For the CNN programs refer to CNN folder)***
 
   - The accuracy for the AI model.
   - The values for y_axis for the sparsity (that will need to be copied and pasted into the general_sparsity_graph.py).
