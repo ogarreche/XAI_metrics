@@ -293,7 +293,7 @@ percentage of features that intersect in different runs among
 the total number of features for single network traffic
 instance.
 
-![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/d6e2ee3e-3d20-4dfa-a186-c165e4f336ca)
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/CCN_SPAR_CIC.png)
 
 
 Main Insights:
@@ -358,6 +358,9 @@ our three datasets. Such a table shows that CNN achieves high performance for CI
 RoEduNet-SIMARGL2021, while it has lower performance for NSL-KDD dataset. Note that Table
 11 shows all performance metrics.
 
+
+![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/ea663c33-657b-42ee-a865-99fac4a2535d)
+
 Main Insights:
 
 Based on the results, we can conclude that LIME is
@@ -417,6 +420,7 @@ Efficiency:
   - Inside the CICIDS or SIMARGL or NSLKDD folder you will find programs for each model used in this paper. They output the time spent to generate the SHAP or LIME evaluation for  k samples. We can just set up in the program the k value and take note of the time spent.
 
 Heatmap: 
+
   - To generate heatmaps, see the code [dataset]_heatmap.py located in each dataset folder. 
 ### References:
 
