@@ -418,7 +418,7 @@ subgroup (i.e., both models display the same median), we
 cannot know which is better, but only that they are statistically
 different enough due to the evidence shown by the Wilcoxon
 test. In this case, we highlighted both models in bold in
-Table 17.
+Table 10.
 
 ### Datasets:
 
