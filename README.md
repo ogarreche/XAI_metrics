@@ -387,6 +387,15 @@ roughly 30 times faster than SHAP in the same conditions analyzed. Unfortunately
 derive the Stability experiment for SHAP due to its memory complexity issue. Nonetheless, LIME
 performed 54.54% for Stability.
 
+
+Table 10: This table shows the pairwise statistical test results between every pair of AI models by Wilcoxon signed rank test.
+Statistically better method (p < 0.05) shown in bold (both marked bold if there is significance and the median of the accuracies
+are the same. Only one is marked bold if there is significance and one model has a higher median). On the left, the CICIDS-2017
+testbed is shown. In the middle, the RoEduNet-SIMARGL2021 testbed is shown. On the right, the NSL-KDD testbed is shown.
+For all testbeds, our method is statistically sound.
+
+
+
 ### Datasets:
 
 Download one of the datasets. 
