@@ -293,10 +293,6 @@ percentage of features that intersect in different runs among
 the total number of features for single network traffic
 instance.
 
-![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/CCN_SPAR_CIC.png)
-
-
-![image](https://github.com/ogarreche/XAI_metrics/blob/main/CNN_SPAR_CIC.png)
 
 Main Insights:
 
@@ -360,8 +356,21 @@ our three datasets. Such a table shows that CNN achieves high performance for CI
 RoEduNet-SIMARGL2021, while it has lower performance for NSL-KDD dataset. Note that Table
 11 shows all performance metrics.
 
-
 ![image](https://github.com/ogarreche/XAI_metrics/blob/main/CNN_graph_DA.png)
+
+Figure 18: Descriptive Accuracy using the CNN model
+for the CICIDS-2017 dataset. Note that the plot indicates
+evidence that the most important features might not be
+influential because there is no significant drop in accuracy
+for both XAI techniques.
+
+
+![image](https://github.com/ogarreche/XAI_metrics/blob/main/CNN_SPAR_CIC.png)
+
+FIGURE 19: Sparsity metric using the CNN model for the
+CICIDS-2017 dataset. Note that the SHAP XAI method
+outperforms LIME because it has more area under the curve,
+and its curve ascends sooner.
 
 Main Insights:
 
