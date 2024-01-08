@@ -473,6 +473,9 @@ Robustness based on: https://github.com/dylan-slack/Fooling-LIME-SHAP/
 
 CNN experiments based on: [https://github.com/dylan-slack/Fooling-LIME-SHAP/](https://github.com/mahbubhimel/Intrusion-Detection-System-Using-Convolutional-Neural-Network)
 
+Wilcoxon: 
+
+  - To generate the statistical analysis, refer to the folder "wilcoxon" and run the programs inside. To obtain the p-values run the .ipynb programs, and for the medians run the .py programs.
 
 Six metrics evaluated are based on: https://arxiv.org/abs/1906.02108
 
