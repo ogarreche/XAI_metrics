@@ -347,6 +347,31 @@ intrusion features.
 FIGURE 17: A heatmap analysis that shows the common top features across different AI models and the two XAI methods
 (SHAP and LIME) for all of the three studied datasets. The number of matched features are shown for each pair.
 
+8. CNN experiment:
+
+To successfully apply CNN, we
+lean into the work of [Zhang et al., 2019]. This work transforms the network intrusion data into
+the array data format to apply it to the CNN model. Such a model consists of one Convolution 1D
+layer, pooling 1D layer, fully connected layer, and ReLU activation function. In sequence, the model
+is trained and evaluated for all datasets. See Table 11 below for performances of CNN for all of
+our three datasets. Such a table shows that CNN achieves high performance for CICIDS-2017 and
+RoEduNet-SIMARGL2021, while it has lower performance for NSL-KDD dataset. Note that Table
+11 shows all performance metrics.
+
+Main Insights:
+
+Based on the results, we can conclude that LIME is
+better suited to work with the CNN setup used for this experiment. The reasons for this verdict are
+mainly the memory efficiency problem found when using SHAP paired with CNN, which makes the
+combination almost unusable and impractical. In the other spectrum, LIME does not display the
+same issue. Considering the XAI metrics, both LIME and SHAP perform the same in Descriptive
+Accuracy in which there is no significant drop in accuracy for both cases, which also might indicate
+the case that CNN might not be the best option for explainability when compared to the other seven
+models analyzed (e.g., see the response to the Reviewer 2). In the case of Sparsity, SHAP performed
+better than LIME, indicating it selected better features. Analyzing the Time Efficiency, LIME is
+roughly 30 times faster than SHAP in the same conditions analyzed. Unfortunately, we could not
+derive the Stability experiment for SHAP due to its memory complexity issue. Nonetheless, LIME
+performed 54.54% for Stability.
 
 ### Datasets:
 
