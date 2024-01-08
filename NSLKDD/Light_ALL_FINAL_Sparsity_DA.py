@@ -39,7 +39,7 @@ from keras.layers import Dense # importing dense layer
 from keras.layers import Input
 from keras.models import Model
 # representation of model layers
-from keras.utils import plot_model
+# from keras.utils import plot_model
 from sklearn.metrics import confusion_matrix
 import shap
 
@@ -530,7 +530,7 @@ for i in range(len(class_names)):
     Matthews = MCC(TP, TN, FP, FN)
     
     # AUC_ROC calculation
-    #AUC_ROC = roc_auc_score(y_test_bin[:, i], y_pred_bin[:, i])
+    # AUC_ROC = roc_auc_score(y_test_bin[:, i], y_pred_bin[:, i])
     
     # Print metrics
     print(f'Metrics for: {class_names[i]}')
@@ -548,6 +548,184 @@ total_false_positive_rate = (total_false_positives / total_predictions) * 100
 
 # Print the total false positive rate
 print('Total False Positive Rate: {:.2f}%'.format(total_false_positive_rate))
+
+
+
+
+class_names = ['Normal','DoS', 'Probe', 'R2L', 'U2R']
+total_false_positives = 0
+total_predictions = len(y_true_multiclass)
+TP_total = 0
+TN_total = 0
+FP_total = 0
+FN_total = 0
+
+# Function Definitions for Metrics
+def ACC(TP, TN, FP, FN):
+    return (TP + TN) / (TP + FP + FN + TN)
+
+def PRECISION(TP, FP):
+    return TP / (TP + FP + 1e-7)
+
+def RECALL(TP, FN):
+    return TP / (TP + FN)
+
+def F1(Recall, Precision):
+    return 2 * Recall * Precision / (Recall + Precision + 1e-7)
+
+def BACC(TP, TN, FP, FN):
+    return (TP / (TP + FN) + TN / (TN + FP)) / 2
+
+def MCC(TP, TN, FP, FN):
+    return (TP * TN - FP * FN) / np.sqrt((TP + FP + 1e-7) * (TP + FN + 1e-7) * (TN + FP + 1e-7) * (TN + FN + 1e-7))
+
+# Iterate through each class and calculate the metrics
+for i in range(len(class_names)):
+    TP = confusion[i, i]
+    FP = confusion[:, i].sum() - TP
+    FN = confusion[i, :].sum() - TP
+    TN = confusion.sum() - TP - FP - FN
+
+    total_false_positives += FP
+    TP_total += TP
+    TN_total += TN
+    FP_total += FP
+    FN_total += FN
+
+
+
+# Acc = ACC(TP, TN, FP, FN)
+overall_Acc = ACC(TP_total, TN_total, FP_total, FN_total)
+Precision = PRECISION(TP_total, FP_total)
+Recall = RECALL(TP_total, FN_total)
+F1_score = F1(Recall, Precision)
+Balanced_accuracy = BACC(TP_total, TN_total, FP_total, FN_total)
+Matthews = MCC(TP_total, TN_total, FP_total, FN_total)
+# overall_AUC_ROC = roc_auc_score(y_test, y_pred, multi_class='ovr')
+# AUC_ROC = roc_auc_score(y_test_bin[:, i], y_pred_bin[:, i])
+
+print('Overall Metrics:')
+print(f'Accuracy: {overall_Acc}')
+print(f'Precision: {Precision}')
+print(f'Recall: {Recall}')
+print(f'F1: {F1_score}')
+print(f'BACC: {Balanced_accuracy}')
+print(f'MCC: {Matthews}')
+# print(f'False Positive Percentage: {overall_FPR}')
+# print(f'AUC_ROC total: {overall_AUC_ROC}')
+
+
+#----------------AUCROC--------------------
+# y_train_multi= multi_data[['intrusion']]
+# X_train_multi= multi_data.drop(labels=['intrusion'], axis=1)
+
+# print('X_train has shape:',X_train_multi.shape,'\ny_train has shape:',y_train_multi.shape)
+
+# y_test_multi= multi_data_test[['intrusion']]
+# X_test_multi=
+# print('flag',y_train_multi)
+
+single_class_train = np.argmax(y_train_multi, axis=1)
+single_class_test = np.argmax(y_test_multi, axis=1)
+
+
+df1 = X_train_multi.assign(Label = single_class_train)
+df2 =  X_test_multi.assign(Label = single_class_test)
+
+frames = [df1,  df2]
+
+df = pd.concat(frames,ignore_index=True)
+
+y = df.pop('Label')
+X = df
+y1, y2 = pd.factorize(y)
+
+y_0 = pd.DataFrame(y1)
+y_1 = pd.DataFrame(y1)
+y_2 = pd.DataFrame(y1)
+y_3 = pd.DataFrame(y1)
+y_4 = pd.DataFrame(y1)
+
+
+y_0 = y_0.replace(0, 0)
+y_0 = y_0.replace(1, 1)
+y_0 = y_0.replace(2, 1)
+y_0 = y_0.replace(3, 1)
+y_0 = y_0.replace(4, 1)
+
+
+y_1 = y_1.replace(0, 1)
+y_1 = y_1.replace(1, 0)
+y_1 = y_1.replace(2, 1)
+y_1 = y_1.replace(3, 1)
+y_1 = y_1.replace(4, 1)
+
+
+y_2 = y_2.replace(0, 1)
+y_2 = y_2.replace(1, 1)
+y_2 = y_2.replace(2, 0)
+y_2 = y_2.replace(3, 1)
+y_2 = y_2.replace(4, 1)
+
+
+y_3 = y_3.replace(0, 1)
+y_3 = y_3.replace(1, 1)
+y_3 = y_3.replace(2, 1)
+y_3 = y_3.replace(3, 0)
+y_3 = y_3.replace(4, 1)
+
+
+y_4 = y_4.replace(0, 1)
+y_4 = y_4.replace(1, 1)
+y_4 = y_4.replace(2, 1)
+y_4 = y_4.replace(3, 1)
+y_4 = y_4.replace(4, 0)
+
+
+
+df = df.assign(Label = y)
+
+
+
+import sklearn
+from sklearn.model_selection import train_test_split
+split = 0.7
+
+#AUC ROC
+#---------------------------------------------------------------------
+
+#AUCROC
+aucroc =[]
+y_array = [y_0,y_1,y_2,y_3,y_4]
+for j in range(0,len(y_array)):
+    # print(j)
+    #------------------------------------------------------------------------------------------------------------
+    X_train,X_test, y_train, y_test = sklearn.model_selection.train_test_split(X, y_array[j], train_size=split)
+    
+    # evaluate the model
+    model = LGBMClassifier()
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+
+
+    y_scores = y_pred
+    y_true = y_test
+    
+    # Calculate AUC-ROC score
+    auc_roc_score= roc_auc_score(y_true, y_scores,  average='weighted')  # Use 'micro' or 'macro' for different averaging strategies
+    # print("AUC-ROC Score class:", auc_roc_score)
+    aucroc.append(auc_roc_score)
+    #-------------------------------------------------------------------------------------------------------    -----
+    # Calculate the average
+average = sum(aucroc) / len(aucroc)
+
+# Display the result
+# with open(output_file_name, "a") as f:print("AUC ROC Average:", average, file = f)
+print("AUC ROC Average:", average)
+
+#End AUC ROC
+
+
 
 # AUC_ROC total
 #print('AUC_ROC total: ', roc_auc_score(y_test_bin, y_pred_bin, multi_class='ovr'))
