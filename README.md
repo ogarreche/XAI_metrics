@@ -397,6 +397,9 @@ Heatmap:
 
 Robustness based on: https://github.com/dylan-slack/Fooling-LIME-SHAP/
 
+CNN experiments based on: [https://github.com/dylan-slack/Fooling-LIME-SHAP/](https://github.com/mahbubhimel/Intrusion-Detection-System-Using-Convolutional-Neural-Network)
+
+
 Six metrics evaluated are based on: https://arxiv.org/abs/1906.02108
 
 [1] A. L. Buczak and E. Guven, ‘‘A survey of data mining and machine learning
