@@ -296,6 +296,8 @@ instance.
 ![image](https://github.com/ogarreche/XAI_metrics/assets/55901425/CCN_SPAR_CIC.png)
 
 
+![image](https://github.com/ogarreche/XAI_metrics/blob/main/CNN_SPAR_CIC.png)
+
 Main Insights:
 
 As expected, local stability is higher
