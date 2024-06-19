@@ -426,9 +426,9 @@ Download one of the datasets.
 
 RoEduNet-SIMARGL2021: https://www.kaggle.com/datasets/7f91274fa3074d53e983f6eb7a7b24ad1dca136ca967ad0ebe48955e246c24ee 
 
-CICIDS-2017: https://www.kaggle.com/datasets/cicdataset/cicids2017
+CICIDS-2017: [https://www.kaggle.com/datasets/cicdataset/cicids2017](https://www.kaggle.com/datasets/usmanshuaibumusa/cicids-17)
 
-NSL-KDD: https://www.unb.ca/cic/datasets/nsl.html
+NSL-KDD: [https://www.unb.ca/cic/datasets/nsl.html](https://www.kaggle.com/datasets/hassan06/nslkdd)
 
 ### How to use the programs:
 
