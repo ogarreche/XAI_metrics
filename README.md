@@ -473,6 +473,10 @@ Heatmap:
 Please cite our work if it was useful to you. 
 
 https://ieeexplore.ieee.org/abstract/document/10433134
+
+### Example:
+
+Inside the SIMARGL folder there is an Example.ipynb with an example to generate Descriptive Accuracy, Sparsity, Stability and Efficieny. For Robustness and Completeness see its instructions above!
   
 ### References:
 
