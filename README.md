@@ -492,6 +492,10 @@ Web Attack � Brute Force  to Web Attack
 Web Attack � XSS to Web Attack
 And do the same that have the  �. 
 
+Why am seeing sligthly different results for robustness? 
+It could be due to different versions of the python packages, sometimes when a package is updated the way that it handles number can vary slightly causing slightly different results. In my opinion, this is not necessarily a bad thing since the results are still consistent.
+
+
 
   
 ### References:
