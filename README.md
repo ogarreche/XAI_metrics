@@ -479,8 +479,20 @@ https://ieeexplore.ieee.org/abstract/document/10433134
 Inside the SIMARGL folder there is an Example.ipynb with an example to generate Descriptive Accuracy, Sparsity, Stability and Efficieny. For Robustness and Completeness see its instructions above!
 
 
-Note: The programs were tested on linux. If using windows, you might run in the error: "UnicodeDecodeError: 'utf-8' codec can't decode byte 0x96 in position 22398: invalid start byte
+
+### Note
+
+The programs were tested on linux. If using windows, you might run in the error: "UnicodeDecodeError: 'utf-8' codec can't decode byte 0x96 in position 22398: invalid start byte
 ", please refer to: https://github.com/ogarreche/Ensemble_Learning_2_Levels_IDS/issues/1 
+
+
+FOR THE CICIDS dataset: I suggest going to the Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv file and manually changing the following labels with the weird characters (you can do control+F and change all). The idea here is just to group the different labels into similar groups:
+Web Attack � Sql Injection to Web Attack
+Web Attack � Brute Force  to Web Attack
+Web Attack � XSS to Web Attack
+And do the same that have the  �. 
+
+
   
 ### References:
 
